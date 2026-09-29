@@ -1,0 +1,517 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CleanSight AI</title>
+
+   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+
+<body>
+
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            CleanSight <span>AI</span>
+        </div>
+
+
+        <div class="nav-links">
+
+            <a href="#">Home</a>
+
+            <a href="#how">
+                How It Works
+            </a>
+
+            <a href="#report">
+                Report
+            </a>
+
+            <a href="#about">
+                About
+            </a>
+
+        </div>
+
+
+        <a href="#report" class="nav-button">
+            Report Waste
+        </a>
+
+    </nav>
+
+
+
+    <!-- ================= HERO ================= -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <p class="small-title">
+                AI FOR A CLEANER FUTURE
+            </p>
+
+
+            <h1>
+
+                See the Problem.<br>
+
+                <span>
+                    Clean the Future.
+                </span>
+
+            </h1>
+
+
+            <p class="hero-text">
+
+                CleanSight AI helps identify waste problems,
+                understand their severity and create actionable
+                cleanliness reports.
+
+            </p>
+
+
+            <a href="#report" class="main-button">
+
+                📸 Report a Waste Problem
+
+            </a>
+
+        </div>
+
+
+
+        <div class="hero-card">
+
+    <div class="card-header">
+        <span>LIVE REPORT</span>
+        <span class="dot">●</span>
+    </div>
+
+    <div class="report-preview">
+
+        <div class="preview-icon">
+            🗑️
+        </div>
+
+        <div>
+            <h3>Waste detected</h3>
+            <p>Plastic waste · High priority</p>
+        </div>
+
+    </div>
+
+    <div class="preview-location">
+        📍 Community Area
+    </div>
+
+    <div class="preview-action">
+        Collection recommended
+    </div>
+
+</div>
+
+    </section>
+
+
+
+    <!-- ================= FEATURES ================= -->
+
+    <section class="features">
+
+
+        <div class="feature-card">
+
+            <div class="icon">
+                📸
+            </div>
+
+
+            <h3>
+                Detect
+            </h3>
+
+
+            <p>
+                Upload an image of a waste problem.
+            </p>
+
+        </div>
+
+
+
+        <div class="feature-card">
+
+            <div class="icon">
+                
+            </div>
+
+
+            <h3>
+                Analyze
+            </h3>
+
+
+            <p>
+                AI analyzes the waste and its severity.
+            </p>
+
+        </div>
+
+
+
+        <div class="feature-card">
+
+            <div class="icon">
+                
+            </div>
+
+
+            <h3>
+                Understand
+            </h3>
+
+
+            <p>
+                Get useful insights and recommendations.
+            </p>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= HOW IT WORKS ================= -->
+
+    <section class="how" id="how">
+
+
+        <p class="small-title">
+            SIMPLE PROCESS
+        </p>
+
+
+        <h2>
+            How CleanSight Works
+        </h2>
+
+
+
+        <div class="steps">
+
+
+            <div class="step">
+
+                <div class="number">
+                    01
+                </div>
+
+
+                <h3>
+                    Upload
+                </h3>
+
+
+                <p>
+                    Upload a photo of the waste problem.
+                </p>
+
+            </div>
+
+
+
+            <div class="step">
+
+                <div class="number">
+                    02
+                </div>
+
+
+                <h3>
+                    AI Analysis
+                </h3>
+
+
+                <p>
+                    CleanSight analyzes the image.
+                </p>
+
+            </div>
+
+
+
+            <div class="step">
+
+                <div class="number">
+                    03
+                </div>
+
+
+                <h3>
+                    Get Insights
+                </h3>
+
+
+                <p>
+                    Receive a report and recommended action.
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= REPORT WASTE ================= -->
+
+    <section class="report-section" id="report">
+
+
+        <div class="report-container">
+
+
+            <div class="report-heading">
+
+                <p class="small-title">
+                    REPORT A PROBLEM
+                </p>
+
+
+                <h2>
+                    Help Keep Your
+                    <span>
+                        Community Clean.
+                    </span>
+                </h2>
+
+
+                <p>
+                    Found a waste problem?
+                    Upload a photo and tell us about it.
+                </p>
+
+            </div>
+
+
+
+            <!-- REPORT FORM -->
+
+            <form class="report-form" action="/report" method="POST" enctype="multipart/form-data">
+
+
+                <!-- IMAGE -->
+
+                <div class="form-group">
+
+                    <label>
+                        Waste Image
+                    </label>
+
+
+                    <div class="upload-area">
+
+                        <div class="upload-icon">
+                            📸
+                        </div>
+
+
+                        <h3>
+                            Upload an Image
+                        </h3>
+
+
+                        <p>
+                            JPG, PNG or JPEG
+                        </p>
+
+
+                        <input
+    type="file"
+    name="image"
+    accept="image/*"
+>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- WASTE TYPE -->
+
+                <div class="form-group">
+
+                    <label>
+                        Waste Type
+                    </label>
+
+
+                    <select name="waste_type">
+
+                        <option value="">
+                            Select waste type
+                        </option>
+
+
+                        <option>
+                            Plastic
+                        </option>
+
+
+                        <option>
+                            Paper
+                        </option>
+
+
+                        <option>
+                            Organic
+                        </option>
+
+
+                        <option>
+                            Glass
+                        </option>
+
+
+                        <option>
+                            Metal
+                        </option>
+
+
+                        <option>
+                            Mixed Waste
+                        </option>
+
+
+                        <option>
+                            Unknown
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- DESCRIPTION -->
+
+                <div class="form-group">
+
+                    <label>
+                        Description
+                    </label>
+
+
+                   <textarea
+    name="description"
+    rows="5"
+    placeholder="Describe the waste problem..."
+></textarea>
+
+                </div>
+
+
+
+                <!-- LOCATION -->
+
+                <div class="form-group">
+
+                    <label>
+                        Location
+                    </label>
+
+
+                   <input
+    type="text"
+    name="location"
+    placeholder="Enter the location"
+>
+
+                </div>
+
+
+
+                <!-- SUBMIT -->
+
+                <button
+                    type="submit"
+                    class="submit-button"
+                >
+
+                    Submit Report
+
+                </button>
+
+
+            </form>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= ABOUT ================= -->
+
+    <section class="about" id="about">
+
+
+        <h2>
+            Building Cleaner Communities
+        </h2>
+
+
+        <p>
+
+            CleanSight AI uses technology to help communities
+            identify waste problems and take meaningful action.
+
+        </p>
+
+    </section>
+
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+
+        <h3>
+            CleanSight AI
+        </h3>
+
+
+        <p>
+            AI for a cleaner tomorrow.
+        </p>
+
+
+        <p class="copyright">
+            © 2026 CleanSight AI
+        </p>
+
+
+    </footer>
+
+
+</body>
+
+</html>
