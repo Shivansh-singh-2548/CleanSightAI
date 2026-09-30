@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>CleanSight AI - Dashboard</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+
+<body>
+
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            CleanSight <span>AI</span>
+        </div>
+
+        <div class="nav-links">
+
+            <a href="/">
+                Home
+            </a>
+
+            <a href="/#report">
+                Report
+            </a>
+
+            <a href="/dashboard">
+                Dashboard
+            </a>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- DASHBOARD -->
+
+    <section class="dashboard">
+
+        <div class="dashboard-container">
+
+
+            <p class="small-title">
+                CLEANLINESS MONITORING
+            </p>
+
+
+            <h1>
+                CleanSight Dashboard
+            </h1>
+
+
+            <p class="dashboard-intro">
+                Monitor and analyze reported waste problems
+                in your community.
+            </p>
+
+
+
+            <!-- SUMMARY CARDS -->
+
+            <div class="dashboard-stats">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        📋
+                    </div>
+
+                    <div>
+                        <p>
+                            Total Reports
+                        </p>
+
+                        <h2>
+                            {{ reports|length }}
+                        </h2>
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        🗑️
+                    </div>
+
+                    <div>
+                        <p>
+                            Waste Reports
+                        </p>
+
+                        <h2>
+                            {{ reports|length }}
+                        </h2>
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        ⚠️
+                    </div>
+
+                    <div>
+                        <p>
+                            Pending Analysis
+                        </p>
+
+                        <h2>
+                            {{ reports|length }}
+                        </h2>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- REPORTS -->
+
+            <div class="dashboard-section">
+
+                <div class="section-heading">
+
+                    <h2>
+                        Recent Reports
+                    </h2>
+
+                    <span>
+                        {{ reports|length }} reports
+                    </span>
+
+                </div>
+
+
+
+                {% if reports %}
+
+                    <div class="reports-grid">
+
+                        {% for report in reports %}
+
+                        <div class="dashboard-report-card">
+
+
+                            <!-- IMAGE -->
+
+                            <div class="report-image">
+
+                                <img
+                                    src="{{ url_for('static', filename='placeholder.png') }}"
+                                    alt="Waste Report"
+                                >
+
+                            </div>
+
+
+                            <!-- REPORT CONTENT -->
+
+                            <div class="report-content">
+
+
+                                <div class="report-card-header">
+
+                                    <h3>
+                                        Report #{{ report["id"] }}
+                                    </h3>
+
+                                    <span class="status">
+                                        {{ report["severity"] }}
+                                    </span>
+
+                                </div>
+
+
+                                <div class="report-details">
+
+                                    <p>
+                                        <strong>
+                                            Waste:
+                                        </strong>
+
+                                        {{ report["waste_type"] }}
+
+                                    </p>
+
+
+                                    <p>
+                                        <strong>
+                                            Location:
+                                        </strong>
+
+                                        {{ report["location"] }}
+
+                                    </p>
+
+
+                                    <p>
+                                        <strong>
+                                            Description:
+                                        </strong>
+
+                                        {{ report["description"] }}
+
+                                    </p>
+
+
+                                    <p>
+                                        <strong>
+                                            Submitted:
+                                        </strong>
+
+                                        {{ report["created_at"] }}
+
+                                    </p>
+
+                                </div>
+
+
+                            </div>
+
+                        </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                {% else %}
+
+                    <div class="empty-reports">
+
+                        <h3>
+                            No Reports Yet
+                        </h3>
+
+                        <p>
+                            Submit a waste report to see it here.
+                        </p>
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+</body>
+
+</html>

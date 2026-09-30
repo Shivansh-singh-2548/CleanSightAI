@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Report Submitted - CleanSight AI</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+    <section class="report-result-page">
+
+        <div class="report-result-card">
+
+            <div class="success-icon">
+                ✓
+            </div>
+
+            <h1>
+                Report Submitted
+            </h1>
+
+            <p class="success-text">
+                Your waste report has been successfully recorded.
+            </p>
+
+
+            <div class="result-details">
+
+                <p>
+                    <strong>Waste Type:</strong>
+                    {{ waste_type }}
+                </p>
+
+                <p>
+                    <strong>Location:</strong>
+                    {{ location }}
+                </p>
+
+                <p>
+                    <strong>Description:</strong>
+                    {{ description }}
+                </p>
+
+                <p>
+                    <strong>AI Analysis:</strong>
+                    Pending
+                </p>
+
+            </div>
+
+
+            <a href="/" class="main-button">
+                Submit Another Report
+            </a>
+
+        </div>
+
+    </section>
+
+</body>
+
+</html>

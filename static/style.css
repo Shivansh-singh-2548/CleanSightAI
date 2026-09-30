@@ -576,4 +576,26 @@ footer p {
     .upload-area {
         padding: 30px 15px;
     }
+
+    .report-result {
+    margin-top: 30px;
+    padding: 25px;
+    border-radius: 16px;
+    background: #f4f8f3;
+    border: 1px solid #dce8da;
+}
+
+.report-result h2 {
+    margin-bottom: 20px;
+}
+
+.report-result p {
+    margin: 12px 0;
+}
+
+.report-result strong {
+    display: inline-block;
+    min-width: 130px;
+}
+
 }

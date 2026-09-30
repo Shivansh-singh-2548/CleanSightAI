@@ -216,3 +216,6 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+# CleanSight AI local files
+cleansight.db
+uploads/*

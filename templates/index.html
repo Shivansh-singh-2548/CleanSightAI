@@ -9,7 +9,8 @@
 
     <title>CleanSight AI</title>
 
-   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
 
 </head>
 
@@ -65,13 +66,11 @@
 
 
             <h1>
-
                 See the Problem.<br>
 
                 <span>
                     Clean the Future.
                 </span>
-
             </h1>
 
 
@@ -85,9 +84,7 @@
 
 
             <a href="#report" class="main-button">
-
                 📸 Report a Waste Problem
-
             </a>
 
         </div>
@@ -96,33 +93,50 @@
 
         <div class="hero-card">
 
-    <div class="card-header">
-        <span>LIVE REPORT</span>
-        <span class="dot">●</span>
-    </div>
+            <div class="card-header">
 
-    <div class="report-preview">
+                <span>
+                    LIVE REPORT
+                </span>
 
-        <div class="preview-icon">
-            🗑️
+                <span class="dot">
+                    ●
+                </span>
+
+            </div>
+
+
+            <div class="report-preview">
+
+                <div class="preview-icon">
+                    🗑️
+                </div>
+
+                <div>
+
+                    <h3>
+                        Waste detected
+                    </h3>
+
+                    <p>
+                        Plastic waste · High priority
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="preview-location">
+                📍 Community Area
+            </div>
+
+
+            <div class="preview-action">
+                Collection recommended
+            </div>
+
         </div>
-
-        <div>
-            <h3>Waste detected</h3>
-            <p>Plastic waste · High priority</p>
-        </div>
-
-    </div>
-
-    <div class="preview-location">
-        📍 Community Area
-    </div>
-
-    <div class="preview-action">
-        Collection recommended
-    </div>
-
-</div>
 
     </section>
 
@@ -156,7 +170,7 @@
         <div class="feature-card">
 
             <div class="icon">
-                
+                🔍
             </div>
 
 
@@ -176,7 +190,7 @@
         <div class="feature-card">
 
             <div class="icon">
-                
+                📊
             </div>
 
 
@@ -287,6 +301,8 @@
         <div class="report-container">
 
 
+            <!-- REPORT HEADING -->
+
             <div class="report-heading">
 
                 <p class="small-title">
@@ -295,25 +311,36 @@
 
 
                 <h2>
+
                     Help Keep Your
+
                     <span>
                         Community Clean.
                     </span>
+
                 </h2>
 
 
                 <p>
+
                     Found a waste problem?
+
                     Upload a photo and tell us about it.
+
                 </p>
 
             </div>
 
 
 
-            <!-- REPORT FORM -->
+            <!-- ================= REPORT FORM ================= -->
 
-            <form class="report-form" action="/report" method="POST" enctype="multipart/form-data">
+            <form
+                class="report-form"
+                action="/report"
+                method="POST"
+                enctype="multipart/form-data"
+            >
 
 
                 <!-- IMAGE -->
@@ -343,10 +370,11 @@
 
 
                         <input
-    type="file"
-    name="image"
-    accept="image/*"
->
+                            type="file"
+                            name="image"
+                            accept="image/*"
+                            required
+                        >
 
                     </div>
 
@@ -363,44 +391,47 @@
                     </label>
 
 
-                    <select name="waste_type">
+                    <select
+                        name="waste_type"
+                        required
+                    >
 
                         <option value="">
                             Select waste type
                         </option>
 
 
-                        <option>
+                        <option value="Plastic">
                             Plastic
                         </option>
 
 
-                        <option>
+                        <option value="Paper">
                             Paper
                         </option>
 
 
-                        <option>
+                        <option value="Organic">
                             Organic
                         </option>
 
 
-                        <option>
+                        <option value="Glass">
                             Glass
                         </option>
 
 
-                        <option>
+                        <option value="Metal">
                             Metal
                         </option>
 
 
-                        <option>
+                        <option value="Mixed Waste">
                             Mixed Waste
                         </option>
 
 
-                        <option>
+                        <option value="Unknown">
                             Unknown
                         </option>
 
@@ -419,11 +450,12 @@
                     </label>
 
 
-                   <textarea
-    name="description"
-    rows="5"
-    placeholder="Describe the waste problem..."
-></textarea>
+                    <textarea
+                        name="description"
+                        rows="5"
+                        placeholder="Describe the waste problem..."
+                        required
+                    ></textarea>
 
                 </div>
 
@@ -438,11 +470,12 @@
                     </label>
 
 
-                   <input
-    type="text"
-    name="location"
-    placeholder="Enter the location"
->
+                    <input
+                        type="text"
+                        name="location"
+                        placeholder="Enter the location"
+                        required
+                    >
 
                 </div>
 
@@ -461,6 +494,67 @@
 
 
             </form>
+
+
+
+            <!-- ================= REPORT RESULT ================= -->
+
+            {% if report_submitted %}
+
+            <div class="report-result">
+
+                <h2>
+                    ✓ Report Submitted
+                </h2>
+
+
+                <p>
+
+                    <strong>
+                        Waste Type:
+                    </strong>
+
+                    {{ waste_type }}
+
+                </p>
+
+
+                <p>
+
+                    <strong>
+                        Location:
+                    </strong>
+
+                    {{ location }}
+
+                </p>
+
+
+                <p>
+
+                    <strong>
+                        Description:
+                    </strong>
+
+                    {{ description }}
+
+                </p>
+
+
+                <p>
+
+                    <strong>
+                        AI Analysis:
+                    </strong>
+
+                    Pending
+
+                </p>
+
+            </div>
+
+            {% endif %}
+
 
         </div>
 
