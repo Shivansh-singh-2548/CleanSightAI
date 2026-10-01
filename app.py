@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, send_from_directory
 import os
 import sqlite3
 
@@ -112,12 +112,14 @@ def report():
         location=location
     )
 
+
 # ================= DASHBOARD =================
 
 @app.route("/dashboard")
 def dashboard():
 
     conn = sqlite3.connect("cleansight.db")
+
     conn.row_factory = sqlite3.Row
 
     cursor = conn.cursor()
@@ -137,9 +139,21 @@ def dashboard():
     )
 
 
+# ================= UPLOADED IMAGES =================
+
+@app.route("/uploads/<filename>")
+def uploaded_file(filename):
+
+    return send_from_directory(
+        app.config["UPLOAD_FOLDER"],
+        filename
+    )
+
+
 # ================= START APP =================
 
 init_db()
+
 
 if __name__ == "__main__":
 
