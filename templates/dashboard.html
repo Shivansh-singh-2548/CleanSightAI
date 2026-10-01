@@ -10,8 +10,8 @@
 
     <title>CleanSight AI - Dashboard</title>
 
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='style.css') }}">
+  <link rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}">
 
 </head>
 
@@ -19,7 +19,7 @@
 <body>
 
 
-    <!-- NAVBAR -->
+    <!-- ================= NAVBAR ================= -->
 
     <nav class="navbar">
 
@@ -47,7 +47,7 @@
 
 
 
-    <!-- DASHBOARD -->
+    <!-- ================= DASHBOARD ================= -->
 
     <section class="dashboard">
 
@@ -71,9 +71,12 @@
 
 
 
-            <!-- SUMMARY CARDS -->
+            <!-- ================= SUMMARY CARDS ================= -->
 
             <div class="dashboard-stats">
+
+
+                <!-- TOTAL REPORTS -->
 
                 <div class="stat-card">
 
@@ -82,17 +85,22 @@
                     </div>
 
                     <div>
+
                         <p>
                             Total Reports
                         </p>
 
                         <h2>
-                            {{ reports|length }}
+                            {{ total_reports }}
                         </h2>
+
                     </div>
 
                 </div>
 
+
+
+                <!-- PLASTIC REPORTS -->
 
                 <div class="stat-card">
 
@@ -101,17 +109,22 @@
                     </div>
 
                     <div>
+
                         <p>
-                            Waste Reports
+                            Plastic Reports
                         </p>
 
                         <h2>
-                            {{ reports|length }}
+                            {{ plastic_reports }}
                         </h2>
+
                     </div>
 
                 </div>
 
+
+
+                <!-- PENDING ANALYSIS -->
 
                 <div class="stat-card">
 
@@ -120,24 +133,28 @@
                     </div>
 
                     <div>
+
                         <p>
                             Pending Analysis
                         </p>
 
                         <h2>
-                            {{ reports|length }}
+                            {{ pending_reports }}
                         </h2>
+
                     </div>
 
                 </div>
+
 
             </div>
 
 
 
-            <!-- REPORTS -->
+            <!-- ================= REPORTS ================= -->
 
             <div class="dashboard-section">
+
 
                 <div class="section-heading">
 
@@ -146,7 +163,7 @@
                     </h2>
 
                     <span>
-                        {{ reports|length }} reports
+                        {{ total_reports }} reports
                     </span>
 
                 </div>
@@ -155,26 +172,30 @@
 
                 {% if reports %}
 
+
                     <div class="reports-grid">
 
+
                         {% for report in reports %}
+
 
                         <div class="dashboard-report-card">
 
 
-                            <!-- IMAGE -->
+                            <!-- ================= IMAGE ================= -->
 
                             <div class="report-image">
 
                                 <img
-    src="{{ url_for('uploaded_file', filename=report['image']) }}"
-    alt="Waste Report"
->
+                                    src="{{ url_for('uploaded_file', filename=report['image']) }}"
+                                    alt="Waste Report"
+                                >
 
                             </div>
 
 
-                            <!-- REPORT CONTENT -->
+
+                            <!-- ================= REPORT CONTENT ================= -->
 
                             <div class="report-content">
 
@@ -192,9 +213,12 @@
                                 </div>
 
 
+
                                 <div class="report-details">
 
+
                                     <p>
+
                                         <strong>
                                             Waste:
                                         </strong>
@@ -204,7 +228,9 @@
                                     </p>
 
 
+
                                     <p>
+
                                         <strong>
                                             Location:
                                         </strong>
@@ -214,7 +240,9 @@
                                     </p>
 
 
+
                                     <p>
+
                                         <strong>
                                             Description:
                                         </strong>
@@ -224,7 +252,9 @@
                                     </p>
 
 
+
                                     <p>
+
                                         <strong>
                                             Submitted:
                                         </strong>
@@ -233,18 +263,26 @@
 
                                     </p>
 
+
                                 </div>
 
 
                             </div>
 
+
                         </div>
+
 
                         {% endfor %}
 
+
                     </div>
 
+
                 {% else %}
+
+
+                    <!-- ================= EMPTY STATE ================= -->
 
                     <div class="empty-reports">
 
@@ -258,7 +296,9 @@
 
                     </div>
 
+
                 {% endif %}
+
 
             </div>
 

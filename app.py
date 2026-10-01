@@ -114,16 +114,15 @@ def report():
 
 
 # ================= DASHBOARD =================
-
 @app.route("/dashboard")
 def dashboard():
 
     conn = sqlite3.connect("cleansight.db")
-
     conn.row_factory = sqlite3.Row
 
     cursor = conn.cursor()
 
+    # Get all reports
     cursor.execute("""
         SELECT * FROM reports
         ORDER BY created_at DESC
@@ -131,11 +130,37 @@ def dashboard():
 
     reports = cursor.fetchall()
 
+    # Total reports
+    cursor.execute("""
+        SELECT COUNT(*) FROM reports
+    """)
+
+    total_reports = cursor.fetchone()[0]
+
+    # Plastic reports
+    cursor.execute("""
+        SELECT COUNT(*) FROM reports
+        WHERE waste_type = 'Plastic'
+    """)
+
+    plastic_reports = cursor.fetchone()[0]
+
+    # Pending analysis
+    cursor.execute("""
+        SELECT COUNT(*) FROM reports
+        WHERE severity = 'Pending'
+    """)
+
+    pending_reports = cursor.fetchone()[0]
+
     conn.close()
 
     return render_template(
         "dashboard.html",
-        reports=reports
+        reports=reports,
+        total_reports=total_reports,
+        plastic_reports=plastic_reports,
+        pending_reports=pending_reports
     )
 
 

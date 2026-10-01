@@ -1,3 +1,7 @@
+/* =========================================================
+   GLOBAL
+   ========================================================= */
+
 * {
     margin: 0;
     padding: 0;
@@ -11,7 +15,9 @@ body {
 }
 
 
-/* ================= NAVBAR ================= */
+/* =========================================================
+   NAVBAR
+   ========================================================= */
 
 .navbar {
     height: 75px;
@@ -59,7 +65,6 @@ button {
 
 .nav-button {
     background: #159447;
-
     color: white;
 
     padding: 12px 20px;
@@ -74,15 +79,15 @@ button {
 }
 
 
-/* ================= HERO ================= */
+/* =========================================================
+   HERO
+   ========================================================= */
 
 .hero {
     min-height: 600px;
 
     display: flex;
-
     align-items: center;
-
     justify-content: space-between;
 
     gap: 60px;
@@ -151,11 +156,12 @@ button {
 }
 
 
-/* ================= HERO CARD ================= */
+/* =========================================================
+   HERO CARD
+   ========================================================= */
 
 .hero-card {
     width: 330px;
-
     height: 350px;
 
     background: white;
@@ -175,7 +181,6 @@ button {
 
 .scan-circle {
     width: 130px;
-
     height: 130px;
 
     border-radius: 50%;
@@ -212,7 +217,9 @@ button {
 }
 
 
-/* ================= FEATURES ================= */
+/* =========================================================
+   FEATURES
+   ========================================================= */
 
 .features {
     display: flex;
@@ -259,7 +266,9 @@ button {
 }
 
 
-/* ================= HOW IT WORKS ================= */
+/* =========================================================
+   HOW IT WORKS
+   ========================================================= */
 
 .how {
     text-align: center;
@@ -308,7 +317,9 @@ button {
 }
 
 
-/* ================= REPORT SECTION ================= */
+/* =========================================================
+   REPORT SECTION
+   ========================================================= */
 
 .report-section {
     background: #eef7f1;
@@ -345,7 +356,9 @@ button {
 }
 
 
-/* ================= REPORT FORM ================= */
+/* =========================================================
+   REPORT FORM
+   ========================================================= */
 
 .report-form {
     background: white;
@@ -358,7 +371,9 @@ button {
 }
 
 
-/* ================= FORM GROUP ================= */
+/* =========================================================
+   FORM GROUP
+   ========================================================= */
 
 .form-group {
     margin-bottom: 30px;
@@ -375,7 +390,9 @@ button {
 }
 
 
-/* ================= UPLOAD AREA ================= */
+/* =========================================================
+   UPLOAD AREA
+   ========================================================= */
 
 .upload-area {
     border: 2px dashed #b9d8c3;
@@ -412,7 +429,9 @@ button {
 }
 
 
-/* ================= INPUTS ================= */
+/* =========================================================
+   INPUTS
+   ========================================================= */
 
 .form-group select,
 .form-group input[type="text"],
@@ -445,7 +464,9 @@ button {
 }
 
 
-/* ================= SUBMIT BUTTON ================= */
+/* =========================================================
+   SUBMIT BUTTON
+   ========================================================= */
 
 .submit-button {
     width: 100%;
@@ -472,7 +493,9 @@ button {
 }
 
 
-/* ================= ABOUT ================= */
+/* =========================================================
+   ABOUT
+   ========================================================= */
 
 .about {
     text-align: center;
@@ -495,7 +518,9 @@ button {
 }
 
 
-/* ================= FOOTER ================= */
+/* =========================================================
+   FOOTER
+   ========================================================= */
 
 footer {
     background: #142019;
@@ -520,7 +545,467 @@ footer p {
 }
 
 
-/* ================= MOBILE ================= */
+/* =========================================================
+   REPORT RESULT
+   ========================================================= */
+
+.report-result {
+    margin-top: 30px;
+
+    padding: 25px;
+
+    border-radius: 16px;
+
+    background: #f4f8f3;
+
+    border: 1px solid #dce8da;
+}
+
+.report-result h2 {
+    margin-bottom: 20px;
+}
+
+.report-result p {
+    margin: 12px 0;
+}
+
+.report-result strong {
+    display: inline-block;
+
+    min-width: 130px;
+}
+
+
+/* =========================================================
+   DASHBOARD
+   ========================================================= */
+
+.dashboard {
+    min-height: 100vh;
+
+    padding: 70px 20px 100px;
+
+    background:
+        radial-gradient(
+            circle at top left,
+            rgba(76, 175, 80, 0.08),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at bottom right,
+            rgba(46, 125, 50, 0.08),
+            transparent 30%
+        ),
+        #f6f9f6;
+}
+
+
+.dashboard-container {
+    max-width: 1200px;
+
+    margin: auto;
+}
+
+
+/* =========================================================
+   DASHBOARD HEADER
+   ========================================================= */
+
+.dashboard-container .small-title {
+    display: inline-block;
+
+    margin-bottom: 10px;
+
+    padding: 7px 14px;
+
+    border-radius: 30px;
+
+    background: #e8f5e9;
+
+    color: #2e7d32;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    letter-spacing: 1.5px;
+}
+
+.dashboard-container h1 {
+    margin: 5px 0 12px;
+
+    font-size: 42px;
+
+    font-weight: 800;
+
+    letter-spacing: -1px;
+}
+
+.dashboard-intro {
+    margin-bottom: 40px;
+
+    color: #68736b;
+
+    font-size: 16px;
+}
+
+
+/* =========================================================
+   DASHBOARD STATISTICS
+   ========================================================= */
+
+.dashboard-stats {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 22px;
+
+    margin-bottom: 50px;
+}
+
+.dashboard .stat-card {
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 18px;
+
+    padding: 25px;
+
+    background: rgba(255, 255, 255, 0.9);
+
+    border: 1px solid #e5ebe5;
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 10px 30px rgba(32, 64, 40, 0.07);
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.dashboard .stat-card:hover {
+    transform: translateY(-5px);
+
+    box-shadow:
+        0 18px 40px rgba(32, 64, 40, 0.12);
+}
+
+
+.dashboard .stat-icon {
+    width: 58px;
+
+    height: 58px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 16px;
+
+    background: #eaf6ec;
+
+    font-size: 27px;
+}
+
+
+.dashboard .stat-card p {
+    margin: 0 0 5px;
+
+    color: #758078;
+
+    font-size: 14px;
+
+    font-weight: 600;
+}
+
+
+.dashboard .stat-card h2 {
+    margin: 0;
+
+    color: #1f2d23;
+
+    font-size: 34px;
+
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   DASHBOARD SECTION HEADER
+   ========================================================= */
+
+.dashboard-section {
+    margin-top: 20px;
+}
+
+.section-heading {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 25px;
+}
+
+.section-heading h2 {
+    margin: 0;
+
+    color: #1e2a21;
+
+    font-size: 25px;
+
+    font-weight: 750;
+}
+
+.section-heading span {
+    padding: 8px 14px;
+
+    background: #ffffff;
+
+    border: 1px solid #e2e8e2;
+
+    border-radius: 30px;
+
+    color: #68736b;
+
+    font-size: 13px;
+
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   REPORT GRID
+   ========================================================= */
+
+.reports-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 28px;
+}
+
+
+/* =========================================================
+   REPORT CARD
+   ========================================================= */
+
+.dashboard-report-card {
+    overflow: hidden;
+
+    background: #ffffff;
+
+    border: 1px solid #e7ece7;
+
+    border-radius: 22px;
+
+    box-shadow:
+        0 10px 35px rgba(30, 50, 35, 0.07);
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.dashboard-report-card:hover {
+    transform: translateY(-6px);
+
+    box-shadow:
+        0 18px 45px rgba(30, 50, 35, 0.12);
+}
+
+
+/* =========================================================
+   REPORT IMAGE
+   ========================================================= */
+
+.report-image {
+    position: relative;
+
+    width: 100%;
+
+    height: 240px;
+
+    overflow: hidden;
+
+    background: #e9eee9;
+}
+
+.report-image img {
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
+
+    transition: transform 0.4s ease;
+}
+
+.dashboard-report-card:hover
+.report-image img {
+    transform: scale(1.05);
+}
+
+
+/* =========================================================
+   REPORT CONTENT
+   ========================================================= */
+
+.report-content {
+    padding: 24px;
+}
+
+.report-card-header {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 15px;
+
+    margin-bottom: 20px;
+}
+
+.report-card-header h3 {
+    margin: 0;
+
+    color: #202b23;
+
+    font-size: 19px;
+
+    font-weight: 750;
+}
+
+
+/* =========================================================
+   DASHBOARD STATUS
+   ========================================================= */
+
+/*
+   Scoped to dashboard so it does not interfere
+   with status styling elsewhere on the website.
+*/
+
+.dashboard .status {
+    display: inline-flex;
+
+    align-items: center;
+
+    margin-top: 0;
+
+    padding: 6px 12px;
+
+    border-radius: 30px;
+
+    background: #fff4d6;
+
+    color: #9a6b00;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+.dashboard .status::before {
+    content: "";
+
+    width: 7px;
+
+    height: 7px;
+
+    margin-right: 7px;
+
+    border-radius: 50%;
+
+    background: #e0a500;
+}
+
+
+/* =========================================================
+   REPORT DETAILS
+   ========================================================= */
+
+.report-details {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 13px;
+}
+
+.report-details p {
+    display: flex;
+
+    margin: 0;
+
+    color: #657068;
+
+    font-size: 14px;
+
+    line-height: 1.6;
+}
+
+.report-details strong {
+    min-width: 105px;
+
+    color: #273229;
+
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   EMPTY REPORTS
+   ========================================================= */
+
+.empty-reports {
+    padding: 70px 30px;
+
+    text-align: center;
+
+    background: #ffffff;
+
+    border: 1px solid #e5ebe5;
+
+    border-radius: 22px;
+
+    box-shadow:
+        0 10px 30px rgba(30, 50, 35, 0.05);
+}
+
+.empty-reports h3 {
+    margin-bottom: 8px;
+
+    color: #263228;
+
+    font-size: 22px;
+}
+
+.empty-reports p {
+    margin: 0;
+
+    color: #727d75;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
 
 @media (max-width: 800px) {
 
@@ -577,188 +1062,17 @@ footer p {
         padding: 30px 15px;
     }
 
-    .report-result {
-    margin-top: 30px;
-    padding: 25px;
-    border-radius: 16px;
-    background: #f4f8f3;
-    border: 1px solid #dce8da;
-}
-
-.report-result h2 {
-    margin-bottom: 20px;
-}
-
-.report-result p {
-    margin: 12px 0;
-}
-
-.report-result strong {
-    display: inline-block;
-    min-width: 130px;
-}
-
-/* ================= DASHBOARD ================= */
-
-.dashboard {
-    min-height: 100vh;
-    padding: 80px 20px;
-    background: #f4f8f3;
-}
-
-.dashboard-container {
-    max-width: 1100px;
-    margin: 0 auto;
-}
-
-.dashboard-container h1 {
-    margin: 10px 0;
-}
-
-.dashboard-intro {
-    color: #666;
-    margin-bottom: 35px;
+    .report-result strong {
+        min-width: 130px;
+    }
 }
 
 
-/* ================= STATS ================= */
+/* =========================================================
+   DASHBOARD TABLET
+   ========================================================= */
 
-.dashboard-stats {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    margin-bottom: 45px;
-}
-
-.stat-card {
-    background: white;
-    padding: 25px;
-    border-radius: 18px;
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
-}
-
-.stat-icon {
-    font-size: 30px;
-}
-
-.stat-card p {
-    margin: 0 0 5px;
-    color: #666;
-}
-
-.stat-card h2 {
-    margin: 0;
-    font-size: 32px;
-}
-
-
-/* ================= REPORT SECTION ================= */
-
-.dashboard-section {
-    margin-top: 30px;
-}
-
-.section-heading {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 25px;
-}
-
-.section-heading h2 {
-    margin: 0;
-}
-
-.section-heading span {
-    color: #666;
-}
-
-
-/* ================= REPORT GRID ================= */
-
-.reports-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 25px;
-}
-
-.dashboard-report-card {
-    background: white;
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
-}
-
-
-/* ================= REPORT IMAGE ================= */
-
-.report-image {
-    width: 100%;
-    height: 220px;
-    background: #e9eee9;
-    overflow: hidden;
-}
-
-.report-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-
-/* ================= REPORT CONTENT ================= */
-
-.report-content {
-    padding: 25px;
-}
-
-.report-card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.report-card-header h3 {
-    margin: 0;
-}
-
-.status {
-    padding: 6px 12px;
-    border-radius: 20px;
-    background: #fff3cd;
-    color: #856404;
-    font-size: 13px;
-}
-
-.report-details p {
-    margin: 12px 0;
-    color: #555;
-}
-
-.report-details strong {
-    display: inline-block;
-    min-width: 100px;
-    color: #222;
-}
-
-
-/* ================= EMPTY REPORTS ================= */
-
-.empty-reports {
-    background: white;
-    padding: 50px;
-    text-align: center;
-    border-radius: 20px;
-}
-
-
-/* ================= MOBILE ================= */
-
-@media (max-width: 768px) {
+@media (max-width: 900px) {
 
     .dashboard-stats {
         grid-template-columns: 1fr;
@@ -767,7 +1081,43 @@ footer p {
     .reports-grid {
         grid-template-columns: 1fr;
     }
-
 }
+
+
+/* =========================================================
+   DASHBOARD MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    .dashboard {
+        padding: 45px 15px 70px;
+    }
+
+    .dashboard-container h1 {
+        font-size: 32px;
+    }
+
+    .section-heading {
+        align-items: flex-start;
+
+        gap: 15px;
+
+        flex-direction: column;
+    }
+
+    .report-image {
+        height: 210px;
+    }
+
+    .report-content {
+        padding: 20px;
+    }
+
+    .report-details p {
+        flex-direction: column;
+
+        gap: 2px;
+    }
 
 }
