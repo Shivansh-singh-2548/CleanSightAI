@@ -10,62 +10,436 @@
 
     <title>Report Submitted - CleanSight AI</title>
 
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7f5;
+            color: #17231b;
+        }
+
+
+        /* ============================= */
+        /* REPORT PAGE */
+        /* ============================= */
+
+        .report-result-page {
+            min-height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding: 50px 20px;
+        }
+
+
+        /* ============================= */
+        /* MAIN CARD */
+        /* ============================= */
+
+        .report-result-card {
+            width: 100%;
+            max-width: 650px;
+
+            background: white;
+
+            padding: 45px;
+
+            border-radius: 22px;
+
+            box-shadow:
+                0 15px 40px rgba(0, 0, 0, 0.08);
+
+            text-align: center;
+        }
+
+
+        /* ============================= */
+        /* SUCCESS ICON */
+        /* ============================= */
+
+        .success-icon {
+            width: 70px;
+            height: 70px;
+
+            margin: 0 auto 20px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background: #dcfce7;
+
+            color: #16a34a;
+
+            font-size: 38px;
+            font-weight: bold;
+        }
+
+
+        /* ============================= */
+        /* TITLE */
+        /* ============================= */
+
+        .report-result-card h1 {
+            margin: 0 0 10px;
+
+            font-size: 32px;
+        }
+
+
+        .success-text {
+            margin-bottom: 30px;
+
+            color: #64748b;
+
+            font-size: 16px;
+        }
+
+
+        /* ============================= */
+        /* AI RESULT */
+        /* ============================= */
+
+        .ai-result {
+
+            text-align: left;
+
+            margin: 25px 0;
+
+            padding: 25px;
+
+            border-radius: 16px;
+
+            background: #f0fdf4;
+
+            border: 1px solid #bbf7d0;
+        }
+
+
+        .ai-result h2 {
+
+            margin-top: 0;
+
+            margin-bottom: 20px;
+
+            font-size: 22px;
+
+            color: #166534;
+        }
+
+
+        .ai-result p {
+
+            margin: 12px 0;
+
+            font-size: 16px;
+        }
+
+
+        /* ============================= */
+        /* DETAILS */
+        /* ============================= */
+
+        .result-details {
+
+            text-align: left;
+
+            margin-top: 20px;
+
+            padding: 20px;
+
+            border-radius: 16px;
+
+            background: #f8fafc;
+
+            border: 1px solid #e2e8f0;
+        }
+
+
+        .result-details p {
+
+            margin: 12px 0;
+
+            line-height: 1.5;
+
+            font-size: 16px;
+        }
+
+
+        /* ============================= */
+        /* BUTTONS */
+        /* ============================= */
+
+        .result-buttons {
+
+            display: flex;
+
+            justify-content: center;
+
+            gap: 15px;
+
+            margin-top: 30px;
+
+            flex-wrap: wrap;
+        }
+
+
+        .result-buttons a {
+
+            text-decoration: none;
+
+            font-weight: 600;
+
+            padding: 13px 22px;
+
+            border-radius: 9px;
+        }
+
+
+        .main-button {
+
+            background: #16a34a;
+
+            color: white;
+        }
+
+
+        .main-button:hover {
+
+            background: #15803d;
+        }
+
+
+        .secondary-button {
+
+            background: white;
+
+            color: #17231b;
+
+            border: 1px solid #cbd5e1;
+        }
+
+
+        .secondary-button:hover {
+
+            background: #f1f5f9;
+        }
+
+
+        /* ============================= */
+        /* MOBILE */
+        /* ============================= */
+
+        @media (max-width: 600px) {
+
+            .report-result-card {
+
+                padding: 30px 20px;
+            }
+
+
+            .report-result-card h1 {
+
+                font-size: 26px;
+            }
+
+
+            .result-buttons {
+
+                flex-direction: column;
+            }
+
+
+            .result-buttons a {
+
+                width: 100%;
+
+                text-align: center;
+            }
+
+        }
+
+    </style>
 
 </head>
 
+
 <body>
+
+
+    <!-- ============================= -->
+    <!-- REPORT RESULT -->
+    <!-- ============================= -->
 
     <section class="report-result-page">
 
+
         <div class="report-result-card">
+
+
+            <!-- SUCCESS -->
 
             <div class="success-icon">
                 ✓
             </div>
 
+
             <h1>
                 Report Submitted
             </h1>
+
 
             <p class="success-text">
                 Your waste report has been successfully recorded.
             </p>
 
 
+
+            <!-- ============================= -->
+            <!-- AI RESULT -->
+            <!-- ============================= -->
+<div class="ai-result">
+
+    <h2>
+        🤖 AI Detection
+    </h2>
+
+
+    <p>
+        <strong>
+            Primary Detection:
+        </strong>
+
+        {{ waste_type }}
+    </p>
+
+
+    <p>
+        <strong>
+            Primary Confidence:
+        </strong>
+
+        {{ confidence }}%
+    </p>
+
+
+    <h3 style="margin-top: 25px;">
+        All AI Predictions
+    </h3>
+
+
+    <div style="margin-top: 15px;">
+
+        {% for result in ai_results %}
+
+        <div style="
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 12px;
+            margin-bottom: 8px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        ">
+
+            <span>
+                {{ result["label"] }}
+            </span>
+
+            <strong>
+                {{ "%.2f"|format(result["score"] * 100) }}%
+            </strong>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+
+    <p style="margin-top: 20px;">
+
+        <strong>
+            ⚠️ Severity:
+        </strong>
+
+        {{ severity }}
+
+    </p>
+
+</div>
+
+
+
+            <!-- ============================= -->
+            <!-- REPORT DETAILS -->
+            <!-- ============================= -->
+
             <div class="result-details">
 
-                <p>
-                    <strong>Waste Type:</strong>
-                    {{ waste_type }}
-                </p>
 
                 <p>
-                    <strong>Location:</strong>
+
+                    <strong>
+                        📍 Location:
+                    </strong>
+
                     {{ location }}
+
                 </p>
 
+
                 <p>
-                    <strong>Description:</strong>
+
+                    <strong>
+                        📝 Description:
+                    </strong>
+
                     {{ description }}
+
                 </p>
 
-                <p>
-                    <strong>AI Analysis:</strong>
-                    Pending
-                </p>
 
             </div>
 
 
-            <a href="/" class="main-button">
-                Submit Another Report
-            </a>
+
+            <!-- ============================= -->
+            <!-- BUTTONS -->
+            <!-- ============================= -->
+
+            <div class="result-buttons">
+
+
+                <a href="/" class="main-button">
+                    Submit Another Report
+                </a>
+
+
+                <a href="/dashboard" class="secondary-button">
+                    View Dashboard
+                </a>
+
+
+            </div>
+
 
         </div>
 
+
     </section>
+
 
 </body>
 

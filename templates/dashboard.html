@@ -10,8 +10,8 @@
 
     <title>CleanSight AI - Dashboard</title>
 
-  <link rel="stylesheet"
-      href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
 
 </head>
 
@@ -124,7 +124,7 @@
 
 
 
-                <!-- PENDING ANALYSIS -->
+                <!-- PENDING REPORTS -->
 
                 <div class="stat-card">
 
@@ -135,7 +135,7 @@
                     <div>
 
                         <p>
-                            Pending Analysis
+                            Pending Reports
                         </p>
 
                         <h2>
@@ -217,10 +217,12 @@
                                 <div class="report-details">
 
 
+                                    <!-- AI DETECTED WASTE -->
+
                                     <p>
 
                                         <strong>
-                                            Waste:
+                                            🤖 AI Detected:
                                         </strong>
 
                                         {{ report["waste_type"] }}
@@ -229,10 +231,12 @@
 
 
 
+                                    <!-- LOCATION -->
+
                                     <p>
 
                                         <strong>
-                                            Location:
+                                            📍 Location:
                                         </strong>
 
                                         {{ report["location"] }}
@@ -241,10 +245,12 @@
 
 
 
+                                    <!-- DESCRIPTION -->
+
                                     <p>
 
                                         <strong>
-                                            Description:
+                                            📝 Description:
                                         </strong>
 
                                         {{ report["description"] }}
@@ -253,10 +259,12 @@
 
 
 
+                                    <!-- SUBMITTED TIME -->
+
                                     <p>
 
                                         <strong>
-                                            Submitted:
+                                            🕒 Submitted:
                                         </strong>
 
                                         {{ report["created_at"] }}

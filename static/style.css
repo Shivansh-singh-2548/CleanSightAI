@@ -1120,4 +1120,206 @@ footer p {
         gap: 2px;
     }
 
+    /* ============================= */
+/* AI RESULT */
+/* ============================= */
+
+.ai-result {
+    margin: 25px 0;
+    padding: 20px;
+    border-radius: 14px;
+    background: #f1f8f4;
+    border: 1px solid #d6eadc;
+}
+
+.ai-result h2 {
+    margin-bottom: 15px;
+}
+
+.ai-result p {
+    margin: 8px 0;
+}
+
+
+/* ============================= */
+/* RESULT BUTTONS */
+/* ============================= */
+
+.result-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 25px;
+    flex-wrap: wrap;
+}
+
+.secondary-button {
+    display: inline-block;
+    padding: 12px 22px;
+    border-radius: 8px;
+    text-decoration: none;
+    border: 1px solid #ccc;
+}
+/* ================================================= */
+/* REPORT RESULT PAGE */
+/* ================================================= */
+
+.report-result-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px 20px;
+    background: #f5f8f6;
+}
+
+.report-result-card {
+    width: 100%;
+    max-width: 650px;
+    background: white;
+    padding: 45px;
+    border-radius: 20px;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
+    text-align: center;
+}
+
+.success-icon {
+    width: 65px;
+    height: 65px;
+    margin: 0 auto 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background: #e8f7ee;
+    color: #16a34a;
+    font-size: 35px;
+    font-weight: bold;
+}
+
+.report-result-card h1 {
+    margin-bottom: 10px;
+    font-size: 32px;
+}
+
+.success-text {
+    color: #666;
+    margin-bottom: 30px;
+}
+
+
+/* ================================================= */
+/* AI RESULT */
+/* ================================================= */
+
+.ai-result {
+    text-align: left;
+    margin: 25px 0;
+    padding: 25px;
+    border-radius: 15px;
+    background: #f1f8f4;
+    border: 1px solid #d7eadf;
+}
+
+.ai-result h2 {
+    margin-bottom: 20px;
+    font-size: 22px;
+}
+
+.ai-result p {
+    margin: 12px 0;
+    font-size: 16px;
+}
+
+
+/* ================================================= */
+/* REPORT DETAILS */
+/* ================================================= */
+
+.result-details {
+    text-align: left;
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 15px;
+    background: #fafafa;
+    border: 1px solid #eeeeee;
+}
+
+.result-details p {
+    margin: 12px 0;
+    line-height: 1.5;
+}
+
+
+/* ================================================= */
+/* BUTTONS */
+/* ================================================= */
+
+.result-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 30px;
+    flex-wrap: wrap;
+}
+
+.result-buttons a {
+    text-decoration: none;
+}
+
+.main-button {
+    display: inline-block;
+    padding: 13px 24px;
+    border-radius: 9px;
+    background: #16a34a;
+    color: white;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.main-button:hover {
+    background: #15803d;
+}
+
+.secondary-button {
+    display: inline-block;
+    padding: 13px 24px;
+    border-radius: 9px;
+    background: white;
+    color: #222;
+    border: 1px solid #d1d5db;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.secondary-button:hover {
+    background: #f3f4f6;
+}
+
+
+/* ================================================= */
+/* MOBILE */
+/* ================================================= */
+
+@media (max-width: 600px) {
+
+    .report-result-card {
+        padding: 30px 20px;
+    }
+
+    .report-result-card h1 {
+        font-size: 26px;
+    }
+
+    .result-buttons {
+        flex-direction: column;
+    }
+
+    .result-buttons a {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+}
+
 }
