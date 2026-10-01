@@ -1,107 +1,53 @@
-# CleanSight AI 
+# CleanSight AI
 
 ### See the Problem. Clean the Future.
 
-CleanSight AI is a web-based waste reporting system designed to help communities identify and report waste problems using images and structured information.
+CleanSight AI is an AI-assisted waste reporting and monitoring web application.
 
-The project combines a simple web interface with a Python Flask backend to collect waste reports, upload images, and store report information for further AI-based analysis.
-
----
-
-##  Project Overview
-
-Waste problems such as plastic dumping, mixed waste, roadside garbage, and improper disposal can be difficult to track and manage.
-
-CleanSight AI aims to make waste reporting easier by allowing users to:
-
--  Upload an image of a waste problem
--  Select the type of waste
--  Describe the problem
--  Enter the location
-- Analyze the problem using AI/ML
--  Generate useful insights and reports
-
-The current version focuses on building the working web application and backend foundation.
+The system allows users to upload an image of a waste problem, provide a description and location, and receive AI-based waste classification results. Reports are stored in a database and displayed through a monitoring dashboard.
 
 ---
 
-##  Features
+## Features
 
-### Currently Implemented
-
-- Responsive web interface
-- CleanSight AI landing page
-- Waste reporting form
-- Image upload
-- Flask backend
-- Form data handling
-- Uploaded image storage
-- Waste type collection
-- Description collection
-- Location collection
-
-### Planned Features
-
+- Upload waste images
 - AI-based waste classification
-- Waste severity estimation
-- Confidence score
-- Automated recommendations
-- SQLite database for reports
-- Report history
-- Dashboard and analytics
-- Waste hotspot identification
-- Collection priority estimation
-- Before/after comparison
+- Multiple AI predictions with confidence scores
+- Preliminary waste severity calculation
+- Location-based reporting
+- Waste problem description
+- SQLite database for storing reports
+- Dashboard for monitoring submitted reports
+- Display uploaded waste images
+- Flask-based web application
 
 ---
 
-##  Tech Stack
-
-### Frontend
-
-- HTML5
-- CSS3
-- Bootstrap *(if used in future versions)*
-
-### Backend
-
-- Python
-- Flask
-
-### AI / Machine Learning
-
-Planned:
-
-- NumPy
-- Pandas
-- Matplotlib
-- Scikit-learn
-- Computer Vision
-- Machine Learning models
-
-### Database
-
-Planned:
-
-- SQLite
-- SQL
-
----
-
-##  Project Structure
+## How It Works
 
 ```text
-CleanSight-AI/
-│
-├── app.py
-│
-├── templates/
-│   └── index.html
-│
-├── static/
-│   └── style.css
-│
-├── uploads/
-│   └── uploaded images
-│
-└── README.md
+User
+  |
+  v
+Upload Waste Image
+  |
+  v
+Flask Backend
+  |
+  v
+AI Image Classification
+  |
+  v
+Waste Predictions + Confidence
+  |
+  v
+Severity Calculation
+  |
+  v
+SQLite Database
+  |
+  v
+Report Result
+  |
+  v
+Dashboard
