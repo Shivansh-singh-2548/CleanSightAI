@@ -5,316 +5,666 @@
 
     <meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>CleanSight AI - Dashboard</title>
+    <title>CleanSight AI | Dashboard</title>
 
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='style.css') }}">
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    >
+
+    <style>
+
+        .dashboard-container {
+            width: min(1200px, 94%);
+            margin: 35px auto;
+        }
+
+        .dashboard-heading {
+            margin-bottom: 25px;
+        }
+
+        .dashboard-heading h1 {
+            margin-bottom: 8px;
+        }
+
+        .dashboard-heading p {
+            color: #65756b;
+            line-height: 1.6;
+        }
+
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+
+        .stat-card {
+            padding: 22px;
+            background: #ffffff;
+            border: 1px solid #e1e8e3;
+            border-radius: 12px;
+        }
+
+        .stat-card p {
+            color: #65756b;
+            margin: 0 0 10px;
+        }
+
+        .stat-card h2 {
+            margin: 0;
+            font-size: 30px;
+        }
+
+        .map-panel {
+            background: #ffffff;
+            padding: 20px;
+            border: 1px solid #e1e8e3;
+            border-radius: 14px;
+            margin-bottom: 30px;
+        }
+
+        .map-panel h2 {
+            margin-top: 0;
+        }
+
+        .map-panel p {
+            color: #65756b;
+            line-height: 1.6;
+        }
+
+        #reports-map {
+            height: 520px;
+            width: 100%;
+            border-radius: 10px;
+            z-index: 1;
+        }
+
+        .map-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-top: 16px;
+            color: #45534a;
+            font-size: 14px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .legend-dot {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .legend-high {
+            background: #dc2626;
+        }
+
+        .legend-medium {
+            background: #d97706;
+        }
+
+        .legend-low {
+            background: #16a34a;
+        }
+
+        .legend-unknown {
+            background: #64748b;
+        }
+
+        .reports-heading {
+            margin: 30px 0 20px;
+        }
+
+        .reports-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .report-card {
+            background: #ffffff;
+            border: 1px solid #e1e8e3;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .report-card img {
+            display: block;
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .report-card-content {
+            padding: 20px;
+        }
+
+        .report-card-content h3 {
+            margin-top: 0;
+        }
+
+        .report-card-content p {
+            line-height: 1.6;
+            overflow-wrap: anywhere;
+        }
+
+        .severity-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .severity-high {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .severity-medium {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .severity-low {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .report-link {
+            display: inline-block;
+            margin-top: 8px;
+            color: #166534;
+            font-weight: 600;
+        }
+
+        .empty-state {
+            padding: 30px;
+            background: #f7faf8;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .dashboard-footer {
+            margin: 35px 0;
+        }
+
+        @media (max-width: 800px) {
+
+            .dashboard-stats {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .reports-grid {
+                grid-template-columns: 1fr;
+            }
+
+            #reports-map {
+                height: 400px;
+            }
+
+        }
+
+        @media (max-width: 450px) {
+
+            .dashboard-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .map-panel {
+                padding: 12px;
+            }
+
+        }
+
+    </style>
 
 </head>
 
-
 <body>
 
-
-    <!-- ================= NAVBAR ================= -->
+    <!-- NAVBAR -->
 
     <nav class="navbar">
 
-        <div class="logo">
-            CleanSight <span>AI</span>
-        </div>
-
         <div class="nav-links">
-
-            <a href="/">
-                Home
-            </a>
-
-            <a href="/#report">
-                Report
-            </a>
-
-            <a href="/dashboard">
-                Dashboard
-            </a>
-
+            <a href="/">Home</a>
+            <a href="/#report">Report Waste</a>
+            <a href="/dashboard">Dashboard</a>
         </div>
+
+        <a href="/" class="nav-button">
+            Back to Home
+        </a>
 
     </nav>
 
 
+    <main class="dashboard-container">
 
-    <!-- ================= DASHBOARD ================= -->
+        <!-- HEADING -->
 
-    <section class="dashboard">
-
-        <div class="dashboard-container">
-
+        <section class="dashboard-heading">
 
             <p class="small-title">
-                CLEANLINESS MONITORING
+                WASTE MONITORING
             </p>
 
+            <h1>CleanSight AI Dashboard</h1>
 
-            <h1>
-                CleanSight Dashboard
-            </h1>
-
-
-            <p class="dashboard-intro">
-                Monitor and analyze reported waste problems
-                in your community.
+            <p>
+                Monitor reported waste problems and view their
+                selected locations on the map of India.
             </p>
 
+        </section>
 
 
-            <!-- ================= SUMMARY CARDS ================= -->
+        <!-- STATISTICS -->
 
-            <div class="dashboard-stats">
+        <section class="dashboard-stats">
 
+            <div class="stat-card">
 
-                <!-- TOTAL REPORTS -->
+                <p>Total Reports</p>
 
-                <div class="stat-card">
-
-                    <div class="stat-icon">
-                        📋
-                    </div>
-
-                    <div>
-
-                        <p>
-                            Total Reports
-                        </p>
-
-                        <h2>
-                            {{ total_reports }}
-                        </h2>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- PLASTIC REPORTS -->
-
-                <div class="stat-card">
-
-                    <div class="stat-icon">
-                        🗑️
-                    </div>
-
-                    <div>
-
-                        <p>
-                            Plastic Reports
-                        </p>
-
-                        <h2>
-                            {{ plastic_reports }}
-                        </h2>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- PENDING REPORTS -->
-
-                <div class="stat-card">
-
-                    <div class="stat-icon">
-                        ⚠️
-                    </div>
-
-                    <div>
-
-                        <p>
-                            Pending Reports
-                        </p>
-
-                        <h2>
-                            {{ pending_reports }}
-                        </h2>
-
-                    </div>
-
-                </div>
-
+                <h2>{{ total_reports }}</h2>
 
             </div>
 
 
+            <div class="stat-card">
 
-            <!-- ================= REPORTS ================= -->
+                <p>Plastic Reports</p>
 
-            <div class="dashboard-section">
+                <h2>{{ plastic_reports }}</h2>
+
+            </div>
 
 
-                <div class="section-heading">
+            <div class="stat-card">
 
-                    <h2>
-                        Recent Reports
-                    </h2>
+                <p>Mapped Reports</p>
 
-                    <span>
-                        {{ total_reports }} reports
-                    </span>
+                <h2>{{ mapped_reports }}</h2>
 
+            </div>
+
+
+            <div class="stat-card">
+
+                <p>High Severity</p>
+
+                <h2>{{ high_reports }}</h2>
+
+            </div>
+
+        </section>
+
+
+        <!-- MAP -->
+
+        <section class="map-panel">
+
+            <h2>Waste Reports Across India</h2>
+
+            <p>
+                Click any marker to view the corresponding
+                waste report. Zoom in to inspect locations.
+            </p>
+
+            <div id="reports-map"></div>
+
+            <div class="map-legend">
+
+                <div class="legend-item">
+                    <span class="legend-dot legend-high"></span>
+                    High severity
                 </div>
 
+                <div class="legend-item">
+                    <span class="legend-dot legend-medium"></span>
+                    Medium severity
+                </div>
+
+                <div class="legend-item">
+                    <span class="legend-dot legend-low"></span>
+                    Low severity
+                </div>
+
+                <div class="legend-item">
+                    <span class="legend-dot legend-unknown"></span>
+                    Other
+                </div>
+
+            </div>
+
+        </section>
 
 
-                {% if reports %}
+        <!-- REPORTS -->
+
+        <section>
+
+            <div class="reports-heading">
+
+                <h2>Recent Waste Reports</h2>
+
+                <p>
+                    Review the reports submitted through CleanSight AI.
+                </p>
+
+            </div>
 
 
-                    <div class="reports-grid">
+            {% if reports %}
 
+                <div class="reports-grid">
 
-                        {% for report in reports %}
+                    {% for report in reports %}
 
+                        <article class="report-card">
 
-                        <div class="dashboard-report-card">
-
-
-                            <!-- ================= IMAGE ================= -->
-
-                            <div class="report-image">
+                            {% if report["image"] %}
 
                                 <img
                                     src="{{ url_for('uploaded_file', filename=report['image']) }}"
-                                    alt="Waste Report"
+                                    alt="Uploaded waste report image"
+                                    loading="lazy"
                                 >
 
-                            </div>
+                            {% endif %}
 
 
+                            <div class="report-card-content">
 
-                            <!-- ================= REPORT CONTENT ================= -->
+                                <h3>
+                                    Report #{{ report["id"] }}
+                                </h3>
 
-                            <div class="report-content">
+
+                                <p>
+                                    <strong>AI-detected waste:</strong>
+                                    {{ report["waste_type"] or "Unknown" }}
+                                </p>
 
 
-                                <div class="report-card-header">
+                                <p>
+                                    <strong>Location:</strong>
+                                    {{ report["location"] or "Unknown" }}
+                                </p>
 
-                                    <h3>
-                                        Report #{{ report["id"] }}
-                                    </h3>
 
-                                    <span class="status">
-                                        {{ report["severity"] }}
+                                <p>
+                                    <strong>Description:</strong>
+                                    {{ report["description"] or "No description" }}
+                                </p>
+
+
+                                <p>
+                                    <strong>Severity:</strong>
+
+                                    {% set severity = report["severity"] or "Unknown" %}
+
+                                    <span class="severity-badge
+                                        {% if severity == 'High' %}
+                                            severity-high
+                                        {% elif severity == 'Medium' %}
+                                            severity-medium
+                                        {% elif severity == 'Low' %}
+                                            severity-low
+                                        {% endif %}
+                                    ">
+                                        {{ severity }}
                                     </span>
 
-                                </div>
+                                </p>
 
 
-
-                                <div class="report-details">
-
-
-                                    <!-- AI DETECTED WASTE -->
-
-                                    <p>
-
-                                        <strong>
-                                            🤖 AI Detected:
-                                        </strong>
-
-                                        {{ report["waste_type"] }}
-
-                                    </p>
+                                <p>
+                                    <strong>Submitted:</strong>
+                                    {{ report["created_at"] }}
+                                </p>
 
 
-
-                                    <!-- LOCATION -->
+                                {% if report["latitude"] is not none
+                                      and report["longitude"] is not none %}
 
                                     <p>
-
-                                        <strong>
-                                            📍 Location:
-                                        </strong>
-
-                                        {{ report["location"] }}
-
+                                        <strong>Coordinates:</strong>
+                                        {{ "%.6f"|format(report["latitude"]) }},
+                                        {{ "%.6f"|format(report["longitude"]) }}
                                     </p>
 
+                                    <a
+                                        href="https://www.openstreetmap.org/?mlat={{ report['latitude'] }}&mlon={{ report['longitude'] }}#map=17/{{ report['latitude'] }}/{{ report['longitude'] }}"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        class="report-link"
+                                    >
+                                        View location on OpenStreetMap
+                                    </a>
 
-
-                                    <!-- DESCRIPTION -->
+                                {% else %}
 
                                     <p>
-
-                                        <strong>
-                                            📝 Description:
-                                        </strong>
-
-                                        {{ report["description"] }}
-
+                                        <strong>Map location:</strong>
+                                        Not available for this older report.
                                     </p>
 
-
-
-                                    <!-- SUBMITTED TIME -->
-
-                                    <p>
-
-                                        <strong>
-                                            🕒 Submitted:
-                                        </strong>
-
-                                        {{ report["created_at"] }}
-
-                                    </p>
-
-
-                                </div>
-
+                                {% endif %}
 
                             </div>
 
+                        </article>
 
-                        </div>
+                    {% endfor %}
 
+                </div>
 
-                        {% endfor %}
+            {% else %}
 
+                <div class="empty-state">
 
-                    </div>
+                    <h3>No reports yet</h3>
 
+                    <p>
+                        Submit the first waste report to see it here.
+                    </p>
 
-                {% else %}
+                    <a href="/#report" class="main-button">
+                        Submit a Report
+                    </a>
 
+                </div>
 
-                    <!-- ================= EMPTY STATE ================= -->
+            {% endif %}
 
-                    <div class="empty-reports">
-
-                        <h3>
-                            No Reports Yet
-                        </h3>
-
-                        <p>
-                            Submit a waste report to see it here.
-                        </p>
-
-                    </div>
-
-
-                {% endif %}
+        </section>
 
 
-            </div>
+        <div class="dashboard-footer">
 
+            <a href="/" class="main-button">
+                Return to Home
+            </a>
 
         </div>
 
-    </section>
+    </main>
 
+
+    <!-- LEAFLET -->
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <script>
+
+        const mapReports = {{ map_reports | tojson }};
+
+        const map = L.map("reports-map").setView(
+            [22.9734, 78.6569],
+            5
+        );
+
+        L.tileLayer(
+            "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+            {
+                attribution:
+                    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                maxZoom: 19
+            }
+        ).addTo(map);
+
+
+        function escapeHTML(value) {
+
+            return String(value ?? "").replace(
+                /[&<>"']/g,
+                function (character) {
+
+                    const replacements = {
+                        "&": "&amp;",
+                        "<": "&lt;",
+                        ">": "&gt;",
+                        '"': "&quot;",
+                        "'": "&#39;"
+                    };
+
+                    return replacements[character];
+
+                }
+            );
+
+        }
+
+
+        function getSeverityColor(severity) {
+
+            switch (severity) {
+
+                case "High":
+                    return "#dc2626";
+
+                case "Medium":
+                    return "#d97706";
+
+                case "Low":
+                    return "#16a34a";
+
+                default:
+                    return "#64748b";
+
+            }
+
+        }
+
+
+        const markerBounds = [];
+
+
+        mapReports.forEach(function (report) {
+
+            const latitude = Number(report.latitude);
+            const longitude = Number(report.longitude);
+
+            if (
+                !Number.isFinite(latitude) ||
+                !Number.isFinite(longitude) ||
+                latitude < -90 ||
+                latitude > 90 ||
+                longitude < -180 ||
+                longitude > 180
+            ) {
+                return;
+            }
+
+
+            const marker = L.circleMarker(
+                [latitude, longitude],
+                {
+                    radius: 8,
+                    color: "#ffffff",
+                    weight: 2,
+                    fillColor: getSeverityColor(report.severity),
+                    fillOpacity: 0.9
+                }
+            ).addTo(map);
+
+
+            const popupContent = `
+                <div>
+                    <strong>Report #${escapeHTML(report.id)}</strong>
+                    <hr>
+                    <strong>Waste:</strong>
+                    ${escapeHTML(report.waste_type)}
+                    <br>
+
+                    <strong>Severity:</strong>
+                    ${escapeHTML(report.severity)}
+                    <br>
+
+                    <strong>Location:</strong>
+                    ${escapeHTML(report.location)}
+                    <br>
+
+                    <strong>Description:</strong>
+                    ${escapeHTML(report.description)}
+                    <br>
+
+                    <strong>Submitted:</strong>
+                    ${escapeHTML(report.created_at)}
+                    <br><br>
+
+                    <a
+                        href="https://www.openstreetmap.org/?mlat=${latitude}&mlon=${longitude}#map=17/${latitude}/${longitude}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Open map location
+                    </a>
+                </div>
+            `;
+
+
+            marker.bindPopup(popupContent);
+
+            markerBounds.push([latitude, longitude]);
+
+        });
+
+
+        // Zoom to report locations if reports exist.
+
+        if (markerBounds.length > 0) {
+
+            map.fitBounds(markerBounds, {
+                padding: [35, 35],
+                maxZoom: 12
+            });
+
+        }
+
+
+        setTimeout(function () {
+            map.invalidateSize();
+        }, 200);
+
+    </script>
 
 </body>
 

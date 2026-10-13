@@ -1,51 +1,85 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>CleanSight AI</title>
+    <title>CleanSight AI | Report Waste</title>
 
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='style.css') }}">
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
 
+    <!-- Leaflet map CSS -->
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    >
+
+    <style>
+        .location-map-section {
+            margin-top: 20px;
+        }
+
+        #location-map {
+            height: 420px;
+            width: 100%;
+            border-radius: 12px;
+            border: 1px solid #d7e0dc;
+            z-index: 1;
+        }
+
+        .map-instructions {
+            margin: 10px 0;
+            color: #53645c;
+            line-height: 1.6;
+        }
+
+        .selected-location {
+            margin-top: 12px;
+            padding: 14px;
+            background: #eef8f0;
+            border-radius: 8px;
+            overflow-wrap: anywhere;
+        }
+
+        .selected-location p {
+            margin: 5px 0;
+        }
+
+        .map-error {
+            color: #b42318;
+            margin-top: 8px;
+        }
+
+        .location-coordinates {
+            font-size: 14px;
+            color: #53645c;
+        }
+
+        @media (max-width: 600px) {
+            #location-map {
+                height: 330px;
+            }
+        }
+    </style>
 </head>
-
 
 <body>
 
-
-    <!-- ================= NAVBAR ================= -->
+    <!-- NAVIGATION -->
 
     <nav class="navbar">
 
-   <div class="nav-links">
-
-    <a href="#">
-        Home
-    </a>
-
-    <a href="#how">
-        How It Works
-    </a>
-
-    <a href="#report">
-        Report
-    </a>
-
-    <a href="/dashboard">
-        Dashboard
-    </a>
-
-    <a href="#about">
-        About
-    </a>
-
-</div>
-
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="#how">How It Works</a>
+            <a href="#report">Report</a>
+            <a href="/dashboard">Dashboard</a>
+            <a href="#about">About</a>
+        </div>
 
         <a href="#report" class="nav-button">
             Report Waste
@@ -54,8 +88,7 @@
     </nav>
 
 
-
-    <!-- ================= HERO ================= -->
+    <!-- HERO -->
 
     <section class="hero">
 
@@ -65,76 +98,47 @@
                 AI FOR A CLEANER FUTURE
             </p>
 
-
             <h1>
                 See the Problem.<br>
-
-                <span>
-                    Clean the Future.
-                </span>
+                <span>Clean the Future.</span>
             </h1>
 
-
             <p class="hero-text">
-
                 CleanSight AI helps identify waste problems,
-                understand their severity and create actionable
-                cleanliness reports.
-
+                analyze images, and create reports with
+                map-selected locations.
             </p>
 
-
             <a href="#report" class="main-button">
-                📸 Report a Waste Problem
+                Report a Waste Problem
             </a>
 
         </div>
 
-
-
         <div class="hero-card">
 
             <div class="card-header">
-
-                <span>
-                    LIVE REPORT
-                </span>
-
-                <span class="dot">
-                    ●
-                </span>
-
+                <span>CLEANSIGHT AI</span>
+                <span class="dot">●</span>
             </div>
-
 
             <div class="report-preview">
 
-                <div class="preview-icon">
-                    🗑️
-                </div>
+                <div class="preview-icon">AI</div>
 
                 <div>
-
-                    <h3>
-                        Waste detected
-                    </h3>
-
-                    <p>
-                        Plastic waste · High priority
-                    </p>
-
+                    <h3>Waste Monitoring</h3>
+                    <p>AI-assisted reporting</p>
                 </div>
 
             </div>
 
-
             <div class="preview-location">
-                📍 Community Area
+                Location-based waste reports
             </div>
 
-
             <div class="preview-action">
-                Collection recommended
+                Select a location and submit a report
             </div>
 
         </div>
@@ -142,238 +146,113 @@
     </section>
 
 
-
-    <!-- ================= FEATURES ================= -->
+    <!-- FEATURES -->
 
     <section class="features">
 
-
         <div class="feature-card">
-
-            <div class="icon">
-                📸
-            </div>
-
-
-            <h3>
-                Detect
-            </h3>
-
-
-            <p>
-                Upload an image of a waste problem.
-            </p>
-
+            <div class="icon">01</div>
+            <h3>Report</h3>
+            <p>Upload a photograph of a waste problem.</p>
         </div>
 
-
-
         <div class="feature-card">
-
-            <div class="icon">
-                🔍
-            </div>
-
-
-            <h3>
-                Analyze
-            </h3>
-
-
-            <p>
-                AI analyzes the waste and its severity.
-            </p>
-
+            <div class="icon">02</div>
+            <h3>Analyze</h3>
+            <p>AI predicts possible waste categories.</p>
         </div>
 
-
-
         <div class="feature-card">
-
-            <div class="icon">
-                📊
-            </div>
-
-
-            <h3>
-                Understand
-            </h3>
-
-
-            <p>
-                Get useful insights and recommendations.
-            </p>
-
+            <div class="icon">03</div>
+            <h3>Locate</h3>
+            <p>Record the selected location on the map.</p>
         </div>
 
     </section>
 
 
-
-    <!-- ================= HOW IT WORKS ================= -->
+    <!-- HOW IT WORKS -->
 
     <section class="how" id="how">
 
+        <p class="small-title">SIMPLE PROCESS</p>
 
-        <p class="small-title">
-            SIMPLE PROCESS
-        </p>
-
-
-        <h2>
-            How CleanSight Works
-        </h2>
-
-
+        <h2>How CleanSight Works</h2>
 
         <div class="steps">
 
-
             <div class="step">
-
-                <div class="number">
-                    01
-                </div>
-
-
-                <h3>
-                    Upload
-                </h3>
-
-
-                <p>
-                    Upload a photo of the waste problem.
-                </p>
-
+                <div class="number">01</div>
+                <h3>Upload</h3>
+                <p>Upload an image of the waste problem.</p>
             </div>
 
-
-
             <div class="step">
-
-                <div class="number">
-                    02
-                </div>
-
-
-                <h3>
-                    AI Analysis
-                </h3>
-
-
-                <p>
-                    CleanSight analyzes the image.
-                </p>
-
+                <div class="number">02</div>
+                <h3>Select Location</h3>
+                <p>Click the exact point on the map.</p>
             </div>
 
-
-
             <div class="step">
-
-                <div class="number">
-                    03
-                </div>
-
-
-                <h3>
-                    Get Insights
-                </h3>
-
-
-                <p>
-                    Receive a report and recommended action.
-                </p>
-
+                <div class="number">03</div>
+                <h3>View Report</h3>
+                <p>See the AI results and dashboard.</p>
             </div>
-
 
         </div>
 
     </section>
 
 
-
-    <!-- ================= REPORT WASTE ================= -->
+    <!-- REPORT FORM -->
 
     <section class="report-section" id="report">
 
-
         <div class="report-container">
-
-
-            <!-- REPORT HEADING -->
 
             <div class="report-heading">
 
-                <p class="small-title">
-                    REPORT A PROBLEM
-                </p>
-
+                <p class="small-title">REPORT A PROBLEM</p>
 
                 <h2>
-
                     Help Keep Your
-
-                    <span>
-                        Community Clean.
-                    </span>
-
+                    <span>Community Clean.</span>
                 </h2>
 
-
                 <p>
-
-                    Found a waste problem?
-
-                    Upload a photo and tell us about it.
-
+                    Upload an image, describe the problem,
+                    and select its location on the map.
                 </p>
 
             </div>
 
 
-
-            <!-- ================= REPORT FORM ================= -->
-
             <form
                 class="report-form"
-                action="/report"
+                action="{{ url_for('report') }}"
                 method="POST"
                 enctype="multipart/form-data"
             >
-
 
                 <!-- IMAGE -->
 
                 <div class="form-group">
 
-                    <label>
+                    <label for="image">
                         Waste Image
                     </label>
 
-
                     <div class="upload-area">
 
-                        <div class="upload-icon">
-                            📸
-                        </div>
+                        <h3>Upload an Image</h3>
 
-
-                        <h3>
-                            Upload an Image
-                        </h3>
-
-
-                        <p>
-                            JPG, PNG or JPEG
-                        </p>
-
+                        <p>JPG, PNG or JPEG</p>
 
                         <input
+                            id="image"
                             type="file"
                             name="image"
-                            accept="image/*"
+                            accept="image/jpeg,image/png,image/jpg"
                             required
                         >
 
@@ -382,76 +261,45 @@
                 </div>
 
 
-
                 <!-- WASTE TYPE -->
 
                 <div class="form-group">
 
-                    <label>
+                    <label for="waste_type">
                         Waste Type
                     </label>
 
-
                     <select
+                        id="waste_type"
                         name="waste_type"
                         required
                     >
-
                         <option value="">
                             Select waste type
                         </option>
 
-
-                        <option value="Plastic">
-                            Plastic
-                        </option>
-
-
-                        <option value="Paper">
-                            Paper
-                        </option>
-
-
-                        <option value="Organic">
-                            Organic
-                        </option>
-
-
-                        <option value="Glass">
-                            Glass
-                        </option>
-
-
-                        <option value="Metal">
-                            Metal
-                        </option>
-
-
-                        <option value="Mixed Waste">
-                            Mixed Waste
-                        </option>
-
-
-                        <option value="Unknown">
-                            Unknown
-                        </option>
-
+                        <option value="Plastic">Plastic</option>
+                        <option value="Paper">Paper</option>
+                        <option value="Organic">Organic</option>
+                        <option value="Glass">Glass</option>
+                        <option value="Metal">Metal</option>
+                        <option value="Mixed Waste">Mixed Waste</option>
+                        <option value="Unknown">Unknown</option>
                     </select>
 
                 </div>
-
 
 
                 <!-- DESCRIPTION -->
 
                 <div class="form-group">
 
-                    <label>
+                    <label for="description">
                         Description
                     </label>
 
-
                     <textarea
+                        id="description"
                         name="description"
                         rows="5"
                         placeholder="Describe the waste problem..."
@@ -461,25 +309,86 @@
                 </div>
 
 
-
-                <!-- LOCATION -->
+                <!-- LOCATION TEXT -->
 
                 <div class="form-group">
 
-                    <label>
-                        Location
+                    <label for="location">
+                        Area, City or Landmark
                     </label>
-
 
                     <input
                         type="text"
+                        id="location"
                         name="location"
-                        placeholder="Enter the location"
+                        placeholder="Example: Near a market in Kanpur"
                         required
                     >
 
                 </div>
 
+
+                <!-- LOCATION MAP -->
+
+                <div class="form-group location-map-section">
+
+                    <label>
+                        Select Waste Location on the Map
+                    </label>
+
+                    <p class="map-instructions">
+                        Navigate to the relevant area in India and
+                        click the point where the waste problem exists.
+                        You can zoom in for greater precision.
+                    </p>
+
+                    <div id="location-map"></div>
+
+                    <p
+                        id="map-error"
+                        class="map-error"
+                        role="status"
+                    ></p>
+
+                    <div class="selected-location">
+
+                        <p>
+                            <strong>Selected latitude:</strong>
+                            <span id="selected-latitude">
+                                Not selected
+                            </span>
+                        </p>
+
+                        <p>
+                            <strong>Selected longitude:</strong>
+                            <span id="selected-longitude">
+                                Not selected
+                            </span>
+                        </p>
+
+                        <p class="location-coordinates">
+                            The marker identifies the point you selected.
+                        </p>
+
+                    </div>
+
+                    <!-- Coordinates sent to Flask -->
+
+                    <input
+                        type="hidden"
+                        id="latitude"
+                        name="latitude"
+                        required
+                    >
+
+                    <input
+                        type="hidden"
+                        id="longitude"
+                        name="longitude"
+                        required
+                    >
+
+                </div>
 
 
                 <!-- SUBMIT -->
@@ -488,125 +397,140 @@
                     type="submit"
                     class="submit-button"
                 >
-
                     Submit Report
-
                 </button>
 
-
             </form>
-
-
-
-            <!-- ================= REPORT RESULT ================= -->
-
-            {% if report_submitted %}
-
-            <div class="report-result">
-
-                <h2>
-                    ✓ Report Submitted
-                </h2>
-
-
-                <p>
-
-                    <strong>
-                        Waste Type:
-                    </strong>
-
-                    {{ waste_type }}
-
-                </p>
-
-
-                <p>
-
-                    <strong>
-                        Location:
-                    </strong>
-
-                    {{ location }}
-
-                </p>
-
-
-                <p>
-
-                    <strong>
-                        Description:
-                    </strong>
-
-                    {{ description }}
-
-                </p>
-
-
-                <p>
-
-                    <strong>
-                        AI Analysis:
-                    </strong>
-
-                    Pending
-
-                </p>
-
-            </div>
-
-            {% endif %}
-
 
         </div>
 
     </section>
 
 
-
-    <!-- ================= ABOUT ================= -->
+    <!-- ABOUT -->
 
     <section class="about" id="about">
 
-
-        <h2>
-            Building Cleaner Communities
-        </h2>
-
+        <h2>Building Cleaner Communities</h2>
 
         <p>
-
-            CleanSight AI uses technology to help communities
-            identify waste problems and take meaningful action.
-
+            CleanSight AI converts waste observations into
+            structured reports that can support monitoring
+            and waste-management planning.
         </p>
 
     </section>
 
 
-
-    <!-- ================= FOOTER ================= -->
+    <!-- FOOTER -->
 
     <footer>
 
+        <h3>CleanSight AI</h3>
 
-        <h3>
-            CleanSight AI
-        </h3>
-
-
-        <p>
-            AI for a cleaner tomorrow.
-        </p>
-
+        <p>See the Problem. Clean the Future.</p>
 
         <p class="copyright">
-            © 2026 CleanSight AI
+            Copyright 2026 CleanSight AI
         </p>
-
 
     </footer>
 
 
-</body>
+    <!-- LEAFLET MAP JAVASCRIPT -->
 
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <script>
+        const map = L.map("location-map", {
+            minZoom: 4,
+            maxZoom: 19
+        }).setView([22.9734, 78.6569], 5);
+
+        L.tileLayer(
+            "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+            {
+                attribution:
+                    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                maxZoom: 19
+            }
+        ).addTo(map);
+
+        let selectedMarker = null;
+
+        const latitudeInput = document.getElementById("latitude");
+        const longitudeInput = document.getElementById("longitude");
+
+        const latitudeDisplay =
+            document.getElementById("selected-latitude");
+
+        const longitudeDisplay =
+            document.getElementById("selected-longitude");
+
+        const mapError = document.getElementById("map-error");
+
+        function selectLocation(latitude, longitude) {
+
+            latitudeInput.value = latitude.toFixed(7);
+            longitudeInput.value = longitude.toFixed(7);
+
+            latitudeDisplay.textContent = latitude.toFixed(7);
+            longitudeDisplay.textContent = longitude.toFixed(7);
+
+            mapError.textContent = "";
+
+            if (selectedMarker) {
+                selectedMarker.setLatLng([latitude, longitude]);
+            } else {
+                selectedMarker = L.marker(
+                    [latitude, longitude]
+                ).addTo(map);
+            }
+
+            selectedMarker.bindPopup(
+                "<strong>Selected Waste Location</strong><br>" +
+                "Latitude: " + latitude.toFixed(7) + "<br>" +
+                "Longitude: " + longitude.toFixed(7)
+            ).openPopup();
+        }
+
+        map.on("click", function (event) {
+
+            selectLocation(
+                event.latlng.lat,
+                event.latlng.lng
+            );
+
+        });
+
+        document.querySelector(".report-form").addEventListener(
+            "submit",
+            function (event) {
+
+                if (
+                    latitudeInput.value === "" ||
+                    longitudeInput.value === ""
+                ) {
+                    event.preventDefault();
+
+                    mapError.textContent =
+                        "Please select the waste location on the map.";
+
+                    document.getElementById("location-map")
+                        .scrollIntoView({
+                            behavior: "smooth",
+                            block: "center"
+                        });
+                }
+
+            }
+        );
+
+        // Leaflet sometimes needs a size refresh after page layout.
+        setTimeout(function () {
+            map.invalidateSize();
+        }, 200);
+    </script>
+
+</body>
 </html>
