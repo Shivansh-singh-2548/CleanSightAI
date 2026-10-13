@@ -5,78 +5,682 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>CleanSight AI | Report Waste</title>
+    <title>CleanSight AI | Smart Waste Management</title>
 
+    <!-- Existing project stylesheet -->
     <link
         rel="stylesheet"
         href="{{ url_for('static', filename='style.css') }}"
     >
 
-    <!-- Leaflet map CSS -->
+    <!-- Leaflet Map CSS -->
     <link
         rel="stylesheet"
         href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
     >
 
     <style>
-        .location-map-section {
-            margin-top: 20px;
+        /* =====================================
+           GENERAL STYLES
+        ===================================== */
+
+        * {
+            box-sizing: border-box;
         }
 
-        #location-map {
-            height: 420px;
-            width: 100%;
-            border-radius: 12px;
-            border: 1px solid #d7e0dc;
-            z-index: 1;
+        html {
+            scroll-behavior: smooth;
         }
 
-        .map-instructions {
-            margin: 10px 0;
-            color: #53645c;
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f7faf8;
+            color: #1c3025;
             line-height: 1.6;
         }
 
-        .selected-location {
-            margin-top: 12px;
-            padding: 14px;
-            background: #eef8f0;
+        a {
+            text-decoration: none;
+        }
+
+        button,
+        input,
+        textarea,
+        select {
+            font: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        .container {
+            width: min(1100px, 92%);
+            margin: auto;
+        }
+
+        .section-label {
+            color: #16834a;
+            font-weight: bold;
+            font-size: 13px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+
+        /* =====================================
+           NAVIGATION
+        ===================================== */
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            padding: 18px 5%;
+            background: #ffffff;
+            border-bottom: 1px solid #e3ece6;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .brand {
+            font-size: 22px;
+            font-weight: 800;
+            color: #176b3a;
+        }
+
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #40564a;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .nav-links a:hover {
+            color: #16834a;
+        }
+
+        .nav-button {
+            padding: 11px 17px;
+            background: #16834a;
+            color: white;
+            border-radius: 7px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .nav-button:hover {
+            background: #116b3b;
+        }
+
+
+        /* =====================================
+           HERO
+        ===================================== */
+
+        .hero {
+            padding: 75px 5%;
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 45px;
+            align-items: center;
+            background: linear-gradient(
+                135deg,
+                #eef8f0,
+                #ffffff
+            );
+        }
+
+        .hero h1 {
+            font-size: clamp(36px, 5vw, 58px);
+            line-height: 1.12;
+            margin: 15px 0;
+            color: #183d28;
+        }
+
+        .hero h1 span {
+            color: #16834a;
+        }
+
+        .hero-text {
+            max-width: 590px;
+            color: #52645a;
+            font-size: 17px;
+            margin-bottom: 28px;
+        }
+
+        .primary-button {
+            display: inline-block;
+            padding: 14px 22px;
+            background: #16834a;
+            color: white;
             border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .primary-button:hover {
+            background: #116b3b;
+        }
+
+        .hero-card {
+            padding: 27px;
+            border-radius: 18px;
+            background: white;
+            border: 1px solid #e1ebe4;
+            box-shadow: 0 15px 45px rgba(30, 70, 45, 0.08);
+        }
+
+        .hero-card-header {
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+            color: #176b3a;
+        }
+
+        .status-dot {
+            color: #16a05a;
+        }
+
+        .hero-preview {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 25px 0;
+        }
+
+        .hero-icon {
+            width: 65px;
+            height: 65px;
+            border-radius: 15px;
+            display: grid;
+            place-items: center;
+            background: #e4f5e9;
+            color: #16834a;
+            font-size: 23px;
+            font-weight: bold;
+        }
+
+        .hero-preview h3 {
+            margin: 0;
+        }
+
+        .hero-preview p {
+            color: #65766a;
+            margin: 4px 0;
+        }
+
+        .hero-note {
+            padding: 14px;
+            background: #f1f8f2;
+            border-radius: 8px;
+            color: #176b3a;
+            font-size: 14px;
+        }
+
+
+        /* =====================================
+           FEATURES
+        ===================================== */
+
+        .features {
+            width: min(1100px, 92%);
+            margin: -20px auto 55px;
+            position: relative;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .feature-card {
+            padding: 25px;
+            background: white;
+            border: 1px solid #e2ebe5;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(30, 70, 45, 0.04);
+        }
+
+        .feature-number {
+            font-size: 13px;
+            font-weight: bold;
+            color: #16834a;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 5px;
+        }
+
+        .feature-card p {
+            color: #617166;
+            margin-bottom: 0;
+        }
+
+
+        /* =====================================
+           HOW IT WORKS
+        ===================================== */
+
+        .how-section {
+            padding: 65px 5%;
+            text-align: center;
+        }
+
+        .how-section h2,
+        .report-heading h2 {
+            font-size: clamp(28px, 4vw, 40px);
+            line-height: 1.2;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-top: 35px;
+        }
+
+        .step {
+            padding: 24px;
+            background: white;
+            border: 1px solid #e2ebe5;
+            border-radius: 12px;
+        }
+
+        .step-number {
+            display: inline-grid;
+            place-items: center;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: #e4f5e9;
+            color: #16834a;
+            font-weight: bold;
+        }
+
+        .step p {
+            color: #617166;
+        }
+
+
+        /* =====================================
+           REPORT SECTION
+        ===================================== */
+
+        .report-section {
+            padding: 65px 5%;
+            background: #eef5ef;
+        }
+
+        .report-container {
+            width: min(850px, 100%);
+            margin: auto;
+        }
+
+        .report-heading {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .report-heading h2 span {
+            color: #16834a;
+        }
+
+        .report-heading > p:last-child {
+            color: #617166;
+        }
+
+        .report-form {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid #e1e9e3;
+            box-shadow: 0 12px 35px rgba(30, 70, 45, 0.05);
+        }
+
+        .form-group {
+            margin-bottom: 23px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 9px;
+            color: #263f30;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="file"],
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #d5e1d8;
+            border-radius: 8px;
+            background: white;
+            color: #24382b;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: 2px solid #a4dbb5;
+            border-color: #16834a;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+        }
+
+        .upload-box {
+            padding: 23px;
+            border: 2px dashed #b9d9c2;
+            border-radius: 10px;
+            background: #f8fcf9;
+        }
+
+        .upload-box p {
+            margin-top: 0;
+            color: #617166;
+        }
+
+        .submit-button {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            background: #16834a;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .submit-button:hover {
+            background: #116b3b;
+        }
+
+
+        /* =====================================
+           LOCATION SEARCH
+        ===================================== */
+
+        .location-section {
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 1px solid #e1e9e3;
+        }
+
+        .location-description {
+            color: #617166;
+            font-size: 14px;
+            margin: 5px 0 15px;
+        }
+
+        .current-location-button {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            margin: 12px 0;
+            background: #16834a;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 15px;
+        }
+
+        .current-location-button:hover {
+            background: #116b3b;
+        }
+
+        .current-location-button:disabled {
+            opacity: 0.65;
+            cursor: wait;
+        }
+
+        .location-status {
+            color: #53645c;
+            font-size: 14px;
+            margin: 10px 0;
             overflow-wrap: anywhere;
+        }
+
+        .search-row {
+            display: flex;
+            gap: 10px;
+            align-items: stretch;
+        }
+
+        .search-row input {
+            flex: 1;
+            min-width: 0;
+            padding: 13px;
+            border: 1px solid #d5e1d8;
+            border-radius: 8px;
+        }
+
+        .search-button {
+            padding: 12px 18px;
+            background: #243f30;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .search-button:hover {
+            background: #142b1d;
+        }
+
+        .search-button:disabled {
+            opacity: 0.6;
+            cursor: wait;
+        }
+
+        .search-results {
+            display: none;
+            margin-top: 12px;
+            border: 1px solid #d5e1d8;
+            border-radius: 9px;
+            overflow: hidden;
+            background: white;
+        }
+
+        .location-result {
+            display: block;
+            width: 100%;
+            padding: 13px;
+            text-align: left;
+            background: white;
+            border: none;
+            border-bottom: 1px solid #e5ece7;
+            cursor: pointer;
+        }
+
+        .location-result:last-child {
+            border-bottom: none;
+        }
+
+        .location-result:hover,
+        .location-result:focus {
+            background: #eef8f0;
+        }
+
+        .location-result strong {
+            display: block;
+            color: #176b3a;
+        }
+
+        .location-result span {
+            display: block;
+            margin-top: 4px;
+            font-size: 13px;
+            color: #53645c;
+            overflow-wrap: anywhere;
+        }
+
+
+        /* =====================================
+           MAP
+        ===================================== */
+
+        #location-map {
+            width: 100%;
+            height: 430px;
+            margin-top: 15px;
+            border: 1px solid #d5e1d8;
+            border-radius: 10px;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .map-help {
+            margin: 12px 0;
+            padding: 13px;
+            background: #f1f8f2;
+            color: #31543c;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .selected-location {
+            margin: 15px 0 22px;
+            padding: 16px;
+            background: #f8fcf9;
+            border: 1px solid #dcebe0;
+            border-radius: 9px;
         }
 
         .selected-location p {
             margin: 5px 0;
+            overflow-wrap: anywhere;
+        }
+
+        .coordinates {
+            font-family: monospace;
+            font-size: 14px;
         }
 
         .map-error {
             color: #b42318;
-            margin-top: 8px;
-        }
-
-        .location-coordinates {
             font-size: 14px;
-            color: #53645c;
         }
 
-        @media (max-width: 600px) {
-            #location-map {
-                height: 330px;
-            }
+
+        /* =====================================
+           ABOUT
+        ===================================== */
+
+        .about-section {
+            padding: 65px 5%;
+            text-align: center;
         }
+
+        .about-section p {
+            max-width: 750px;
+            margin: 15px auto;
+            color: #617166;
+        }
+
+
+        /* =====================================
+           FOOTER
+        ===================================== */
+
+        .footer {
+            text-align: center;
+            padding: 35px 20px;
+            background: #183d28;
+            color: white;
+        }
+
+        .footer h3 {
+            margin: 0;
+        }
+
+        .footer p {
+            color: #d5e6da;
+        }
+
+        .footer a {
+            color: white;
+        }
+
+
+        /* =====================================
+           MOBILE RESPONSIVENESS
+        ===================================== */
+
+        @media (max-width: 760px) {
+
+            .navbar {
+                flex-direction: column;
+                padding: 15px;
+            }
+
+            .nav-links {
+                justify-content: center;
+                gap: 13px;
+            }
+
+            .hero {
+                grid-template-columns: 1fr;
+                padding: 50px 6%;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+                margin-top: 20px;
+            }
+
+            .steps {
+                grid-template-columns: 1fr;
+            }
+
+            .report-form {
+                padding: 20px;
+            }
+
+            .search-row {
+                flex-direction: column;
+            }
+
+            .search-button {
+                width: 100%;
+            }
+
+            #location-map {
+                height: 340px;
+            }
+
+        }
+
     </style>
 </head>
 
+
 <body>
 
-    <!-- NAVIGATION -->
+    <!-- =====================================
+         NAVIGATION
+    ====================================== -->
 
     <nav class="navbar">
 
+        <a href="/" class="brand">
+            CleanSight AI
+        </a>
+
         <div class="nav-links">
             <a href="/">Home</a>
-            <a href="#how">How It Works</a>
-            <a href="#report">Report</a>
+            <a href="#how-it-works">How It Works</a>
+            <a href="#report">Report Waste</a>
             <a href="/dashboard">Dashboard</a>
             <a href="#about">About</a>
         </div>
@@ -88,57 +692,59 @@
     </nav>
 
 
-    <!-- HERO -->
+    <!-- =====================================
+         HERO
+    ====================================== -->
 
     <section class="hero">
 
-        <div class="hero-content">
+        <div>
 
-            <p class="small-title">
-                AI FOR A CLEANER FUTURE
+            <p class="section-label">
+                AI for a Cleaner Future
             </p>
 
             <h1>
-                See the Problem.<br>
+                See the Problem.
                 <span>Clean the Future.</span>
             </h1>
 
             <p class="hero-text">
-                CleanSight AI helps identify waste problems,
-                analyze images, and create reports with
-                map-selected locations.
+                CleanSight AI helps communities report waste problems,
+                analyze waste images using AI, and record the exact
+                locations of reported waste.
             </p>
 
-            <a href="#report" class="main-button">
+            <a href="#report" class="primary-button">
                 Report a Waste Problem
             </a>
 
         </div>
 
+
         <div class="hero-card">
 
-            <div class="card-header">
+            <div class="hero-card-header">
                 <span>CLEANSIGHT AI</span>
-                <span class="dot">●</span>
+                <span class="status-dot">● ACTIVE</span>
             </div>
 
-            <div class="report-preview">
+            <div class="hero-preview">
 
-                <div class="preview-icon">AI</div>
+                <div class="hero-icon">
+                    AI
+                </div>
 
                 <div>
-                    <h3>Waste Monitoring</h3>
-                    <p>AI-assisted reporting</p>
+                    <h3>Smart Waste Reporting</h3>
+                    <p>Image analysis and location tracking</p>
                 </div>
 
             </div>
 
-            <div class="preview-location">
-                Location-based waste reports
-            </div>
-
-            <div class="preview-action">
-                Select a location and submit a report
+            <div class="hero-note">
+                Upload an image, detect your location, and mark
+                the exact waste collection point.
             </div>
 
         </div>
@@ -146,57 +752,61 @@
     </section>
 
 
-    <!-- FEATURES -->
+    <!-- =====================================
+         FEATURES
+    ====================================== -->
 
     <section class="features">
 
         <div class="feature-card">
-            <div class="icon">01</div>
-            <h3>Report</h3>
-            <p>Upload a photograph of a waste problem.</p>
+            <span class="feature-number">01 / REPORT</span>
+            <h3>Upload Waste Images</h3>
+            <p>Submit an image showing a waste problem.</p>
         </div>
 
         <div class="feature-card">
-            <div class="icon">02</div>
-            <h3>Analyze</h3>
-            <p>AI predicts possible waste categories.</p>
+            <span class="feature-number">02 / ANALYZE</span>
+            <h3>AI Waste Detection</h3>
+            <p>Use a pretrained AI model to predict a waste category.</p>
         </div>
 
         <div class="feature-card">
-            <div class="icon">03</div>
-            <h3>Locate</h3>
-            <p>Record the selected location on the map.</p>
+            <span class="feature-number">03 / LOCATE</span>
+            <h3>Pinpoint the Location</h3>
+            <p>Detect your position and select the exact point on a map.</p>
         </div>
 
     </section>
 
 
-    <!-- HOW IT WORKS -->
+    <!-- =====================================
+         HOW IT WORKS
+    ====================================== -->
 
-    <section class="how" id="how">
+    <section class="how-section container" id="how-it-works">
 
-        <p class="small-title">SIMPLE PROCESS</p>
+        <p class="section-label">Simple Process</p>
 
         <h2>How CleanSight Works</h2>
 
         <div class="steps">
 
             <div class="step">
-                <div class="number">01</div>
+                <span class="step-number">01</span>
                 <h3>Upload</h3>
-                <p>Upload an image of the waste problem.</p>
+                <p>Upload a photo of the waste problem.</p>
             </div>
 
             <div class="step">
-                <div class="number">02</div>
-                <h3>Select Location</h3>
-                <p>Click the exact point on the map.</p>
+                <span class="step-number">02</span>
+                <h3>Locate</h3>
+                <p>Detect your location or search for a place, then adjust the map marker.</p>
             </div>
 
             <div class="step">
-                <div class="number">03</div>
-                <h3>View Report</h3>
-                <p>See the AI results and dashboard.</p>
+                <span class="step-number">03</span>
+                <h3>Submit</h3>
+                <p>Submit the report and view the AI analysis.</p>
             </div>
 
         </div>
@@ -204,7 +814,9 @@
     </section>
 
 
-    <!-- REPORT FORM -->
+    <!-- =====================================
+         REPORT FORM
+    ====================================== -->
 
     <section class="report-section" id="report">
 
@@ -212,7 +824,7 @@
 
             <div class="report-heading">
 
-                <p class="small-title">REPORT A PROBLEM</p>
+                <p class="section-label">Report a Problem</p>
 
                 <h2>
                     Help Keep Your
@@ -220,21 +832,27 @@
                 </h2>
 
                 <p>
-                    Upload an image, describe the problem,
-                    and select its location on the map.
+                    Provide the details below to report a waste problem.
                 </p>
 
             </div>
 
 
+            <!--
+                IMPORTANT:
+                These field names must match the existing Flask backend.
+            -->
+
             <form
+                id="report-form"
                 class="report-form"
                 action="{{ url_for('report') }}"
                 method="POST"
                 enctype="multipart/form-data"
             >
 
-                <!-- IMAGE -->
+
+                <!-- WASTE IMAGE -->
 
                 <div class="form-group">
 
@@ -242,17 +860,17 @@
                         Waste Image
                     </label>
 
-                    <div class="upload-area">
+                    <div class="upload-box">
 
-                        <h3>Upload an Image</h3>
-
-                        <p>JPG, PNG or JPEG</p>
+                        <p>
+                            Upload a clear picture of the waste.
+                        </p>
 
                         <input
-                            id="image"
                             type="file"
+                            id="image"
                             name="image"
-                            accept="image/jpeg,image/png,image/jpg"
+                            accept="image/jpeg,image/png,image/webp"
                             required
                         >
 
@@ -274,18 +892,26 @@
                         name="waste_type"
                         required
                     >
+
                         <option value="">
                             Select waste type
                         </option>
 
                         <option value="Plastic">Plastic</option>
                         <option value="Paper">Paper</option>
-                        <option value="Organic">Organic</option>
-                        <option value="Glass">Glass</option>
+                        <option value="Cardboard">Cardboard</option>
                         <option value="Metal">Metal</option>
+                        <option value="Glass">Glass</option>
+                        <option value="Organic">Organic</option>
                         <option value="Mixed Waste">Mixed Waste</option>
                         <option value="Unknown">Unknown</option>
+
                     </select>
+
+                    <small>
+                        This is the user's selected category.
+                        Your existing AI model may predict a different category.
+                    </small>
 
                 </div>
 
@@ -295,84 +921,173 @@
                 <div class="form-group">
 
                     <label for="description">
-                        Description
+                        Describe the Waste Problem
                     </label>
 
                     <textarea
                         id="description"
                         name="description"
-                        rows="5"
-                        placeholder="Describe the waste problem..."
+                        rows="4"
+                        placeholder="Example: Garbage has accumulated beside the road..."
                         required
                     ></textarea>
 
                 </div>
 
 
-                <!-- LOCATION TEXT -->
+                <!-- LOCATION NAME -->
 
                 <div class="form-group">
 
                     <label for="location">
-                        Area, City or Landmark
+                        Location Name or Address
                     </label>
 
                     <input
                         type="text"
                         id="location"
                         name="location"
-                        placeholder="Example: Near a market in Kanpur"
+                        placeholder="Example: Geeta Nagar Crossing, Kanpur"
                         required
                     >
 
                 </div>
 
 
-                <!-- LOCATION MAP -->
+                <!-- =====================================
+                     LOCATION SELECTION
+                ====================================== -->
 
-                <div class="form-group location-map-section">
+                <div class="location-section">
 
-                    <label>
-                        Select Waste Location on the Map
-                    </label>
+                    <h3>📍 Select the Exact Waste Location</h3>
 
-                    <p class="map-instructions">
-                        Navigate to the relevant area in India and
-                        click the point where the waste problem exists.
-                        You can zoom in for greater precision.
+                    <p class="location-description">
+                        You can use GPS to detect your current position,
+                        search for a landmark, or click directly on the map.
                     </p>
 
+
+                    <!-- CURRENT LOCATION -->
+
+                    <button
+                        type="button"
+                        id="current-location-button"
+                        class="current-location-button"
+                    >
+                        📍 Use My Current Location
+                    </button>
+
+                    <p
+                        id="current-location-status"
+                        class="location-status"
+                        role="status"
+                        aria-live="polite"
+                    ></p>
+
+
+                    <!-- LOCATION SEARCH -->
+
+                    <label for="location-search-input">
+                        Search a Place or Landmark
+                    </label>
+
+                    <div class="search-row">
+
+                        <input
+                            type="text"
+                            id="location-search-input"
+                            placeholder="e.g. Geeta Nagar Crossing, Kanpur"
+                            autocomplete="off"
+                        >
+
+                        <button
+                            type="button"
+                            id="search-location-button"
+                            class="search-button"
+                        >
+                            Search
+                        </button>
+
+                    </div>
+
+                    <p
+                        id="location-search-status"
+                        class="location-status"
+                        role="status"
+                        aria-live="polite"
+                    ></p>
+
+                    <div
+                        id="location-search-results"
+                        class="search-results"
+                    ></div>
+
+
+                    <!-- MAP INSTRUCTIONS -->
+
+                    <div class="map-help">
+
+                        <strong>How to select the exact point:</strong>
+
+                        <ol>
+                            <li>Click "Use My Current Location" or search for a landmark.</li>
+                            <li>Wait for the map to zoom into the area.</li>
+                            <li>Click directly on the actual waste collection point.</li>
+                            <li>Check the coordinates displayed below the map.</li>
+                        </ol>
+
+                    </div>
+
+
+                    <!-- MAP -->
+
                     <div id="location-map"></div>
+
+
+                    <!-- MAP ERROR -->
 
                     <p
                         id="map-error"
                         class="map-error"
-                        role="status"
+                        role="alert"
                     ></p>
+
+
+                    <!-- SELECTED LOCATION -->
 
                     <div class="selected-location">
 
                         <p>
-                            <strong>Selected latitude:</strong>
-                            <span id="selected-latitude">
-                                Not selected
-                            </span>
+                            <strong>Selected Latitude:</strong>
+                            <span
+                                id="selected-latitude"
+                                class="coordinates"
+                            >Not selected</span>
                         </p>
 
                         <p>
-                            <strong>Selected longitude:</strong>
-                            <span id="selected-longitude">
-                                Not selected
-                            </span>
+                            <strong>Selected Longitude:</strong>
+                            <span
+                                id="selected-longitude"
+                                class="coordinates"
+                            >Not selected</span>
                         </p>
 
-                        <p class="location-coordinates">
-                            The marker identifies the point you selected.
+                        <p>
+                            <strong>GPS Accuracy:</strong>
+                            <span id="gps-accuracy">Not available</span>
+                        </p>
+
+                        <p class="location-description">
+                            Clicking the map changes the coordinates
+                            to the point you select.
                         </p>
 
                     </div>
 
-                    <!-- Coordinates sent to Flask -->
+
+                    <!-- HIDDEN COORDINATES -->
 
                     <input
                         type="hidden"
@@ -397,7 +1112,7 @@
                     type="submit"
                     class="submit-button"
                 >
-                    Submit Report
+                    Submit Waste Report
                 </button>
 
             </form>
@@ -407,59 +1122,95 @@
     </section>
 
 
-    <!-- ABOUT -->
+    <!-- =====================================
+         ABOUT
+    ====================================== -->
 
-    <section class="about" id="about">
+    <section class="about-section" id="about">
 
-        <h2>Building Cleaner Communities</h2>
+        <div class="container">
 
-        <p>
-            CleanSight AI converts waste observations into
-            structured reports that can support monitoring
-            and waste-management planning.
-        </p>
+            <p class="section-label">About the Project</p>
+
+            <h2>Building Cleaner Communities</h2>
+
+            <p>
+                CleanSight AI is a waste-reporting prototype that combines
+                image-based AI predictions with location information.
+                Its structured reports can help communities monitor
+                reported waste problems and identify areas that may need
+                attention.
+            </p>
+
+        </div>
 
     </section>
 
 
-    <!-- FOOTER -->
+    <!-- =====================================
+         FOOTER
+    ====================================== -->
 
-    <footer>
+    <footer class="footer">
 
         <h3>CleanSight AI</h3>
 
         <p>See the Problem. Clean the Future.</p>
 
-        <p class="copyright">
-            Copyright 2026 CleanSight AI
+        <p>
+            <a href="/dashboard">View Dashboard</a>
         </p>
+
+        <small>© 2026 CleanSight AI</small>
 
     </footer>
 
 
-    <!-- LEAFLET MAP JAVASCRIPT -->
+    <!-- =====================================
+         LEAFLET LIBRARY
+    ====================================== -->
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
+
+    <!-- =====================================
+         MAP AND LOCATION JAVASCRIPT
+    ====================================== -->
+
     <script>
-        const map = L.map("location-map", {
-            minZoom: 4,
-            maxZoom: 19
-        }).setView([22.9734, 78.6569], 5);
+
+        // =====================================
+        // 1. INITIALIZE MAP
+        // =====================================
+
+        const map = L.map("location-map").setView(
+            [26.4499, 80.3319],
+            11
+        );
 
         L.tileLayer(
             "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
             {
+                maxZoom: 19,
+
                 attribution:
-                    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-                maxZoom: 19
+                    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             }
         ).addTo(map);
 
-        let selectedMarker = null;
 
-        const latitudeInput = document.getElementById("latitude");
-        const longitudeInput = document.getElementById("longitude");
+        // =====================================
+        // 2. HTML ELEMENTS
+        // =====================================
+
+        const locationInput =
+            document.getElementById("location");
+
+        const latitudeInput =
+            document.getElementById("latitude");
+
+        const longitudeInput =
+            document.getElementById("longitude");
 
         const latitudeDisplay =
             document.getElementById("selected-latitude");
@@ -467,70 +1218,916 @@
         const longitudeDisplay =
             document.getElementById("selected-longitude");
 
-        const mapError = document.getElementById("map-error");
+        const gpsAccuracyDisplay =
+            document.getElementById("gps-accuracy");
 
-        function selectLocation(latitude, longitude) {
+        const currentLocationButton =
+            document.getElementById("current-location-button");
+
+        const currentLocationStatus =
+            document.getElementById("current-location-status");
+
+        const searchInput =
+            document.getElementById("location-search-input");
+
+        const searchButton =
+            document.getElementById("search-location-button");
+
+        const searchStatus =
+            document.getElementById("location-search-status");
+
+        const searchResults =
+            document.getElementById("location-search-results");
+
+        const mapError =
+            document.getElementById("map-error");
+
+
+        // The currently selected map marker.
+
+        let selectedMarker = null;
+
+        // Prevent overlapping location searches.
+
+        let searchRequestNumber = 0;
+
+
+        // =====================================
+        // 3. SELECT AN EXACT MAP POINT
+        // =====================================
+
+        function selectLocation(
+            latitude,
+            longitude,
+            placeName = ""
+        ) {
+
+            latitude = Number(latitude);
+            longitude = Number(longitude);
+
+            if (
+                !Number.isFinite(latitude) ||
+                !Number.isFinite(longitude) ||
+                latitude < -90 ||
+                latitude > 90 ||
+                longitude < -180 ||
+                longitude > 180
+            ) {
+
+                mapError.textContent =
+                    "Invalid coordinates. Please select another location.";
+
+                return;
+
+            }
+
+
+            // Save coordinates in hidden form inputs.
 
             latitudeInput.value = latitude.toFixed(7);
+
             longitudeInput.value = longitude.toFixed(7);
 
-            latitudeDisplay.textContent = latitude.toFixed(7);
-            longitudeDisplay.textContent = longitude.toFixed(7);
+
+            // Display the coordinates.
+
+            latitudeDisplay.textContent =
+                latitude.toFixed(7);
+
+            longitudeDisplay.textContent =
+                longitude.toFixed(7);
+
+
+            // Clear previous errors.
 
             mapError.textContent = "";
 
+
+            // Create the marker or move the existing marker.
+
             if (selectedMarker) {
-                selectedMarker.setLatLng([latitude, longitude]);
+
+                selectedMarker.setLatLng([
+                    latitude,
+                    longitude
+                ]);
+
             } else {
-                selectedMarker = L.marker(
-                    [latitude, longitude]
-                ).addTo(map);
+
+                selectedMarker = L.marker([
+                    latitude,
+                    longitude
+                ]).addTo(map);
+
             }
 
-            selectedMarker.bindPopup(
-                "<strong>Selected Waste Location</strong><br>" +
-                "Latitude: " + latitude.toFixed(7) + "<br>" +
-                "Longitude: " + longitude.toFixed(7)
-            ).openPopup();
-        }
 
-        map.on("click", function (event) {
+            // Build popup content safely.
 
-            selectLocation(
-                event.latlng.lat,
-                event.latlng.lng
+            const popup = document.createElement("div");
+
+            const heading = document.createElement("strong");
+
+            heading.textContent = "Selected Waste Location";
+
+            popup.appendChild(heading);
+
+
+            if (placeName) {
+
+                const name = document.createElement("p");
+
+                name.textContent = placeName;
+
+                popup.appendChild(name);
+
+            }
+
+
+            const coordinateText = document.createElement("p");
+
+            coordinateText.textContent =
+                "Latitude: " + latitude.toFixed(7) +
+                ", Longitude: " + longitude.toFixed(7);
+
+            popup.appendChild(coordinateText);
+
+
+            selectedMarker
+                .bindPopup(popup)
+                .openPopup();
+
+
+            // Zoom in on the selected point.
+
+            map.setView(
+                [latitude, longitude],
+                18,
+                { animate: true }
             );
 
-        });
 
-        document.querySelector(".report-form").addEventListener(
-            "submit",
+            // Refresh the map layout.
+
+            setTimeout(function () {
+                map.invalidateSize();
+            }, 200);
+
+        }
+
+
+        // =====================================
+        // 4. GET CURRENT GPS LOCATION
+        // =====================================
+
+        currentLocationButton.addEventListener(
+            "click",
+            function () {
+
+                if (!navigator.geolocation) {
+
+                    currentLocationStatus.textContent =
+                        "Your browser does not support GPS location detection. Please select the point manually on the map.";
+
+                    return;
+
+                }
+
+
+                currentLocationButton.disabled = true;
+
+                currentLocationStatus.textContent =
+                    "Requesting your location. Please allow location access in your browser.";
+
+
+                gpsAccuracyDisplay.textContent =
+                    "Detecting...";
+
+
+                navigator.geolocation.getCurrentPosition(
+
+                    function (position) {
+
+                        const latitude =
+                            position.coords.latitude;
+
+                        const longitude =
+                            position.coords.longitude;
+
+                        const accuracy =
+                            position.coords.accuracy;
+
+
+                        // Place the marker at the GPS position.
+
+                        selectLocation(
+                            latitude,
+                            longitude,
+                            "GPS-detected position"
+                        );
+
+
+                        // Display reported GPS accuracy.
+
+                        gpsAccuracyDisplay.textContent =
+                            "Approximately " +
+                            Math.round(accuracy) +
+                            " metres";
+
+
+                        // Only fill the location field if empty.
+                        // A reverse-geocoded address can be entered
+                        // later or the user can keep their existing name.
+
+                        if (!locationInput.value.trim()) {
+
+                            locationInput.value =
+                                "GPS-selected location";
+
+                        }
+
+
+                        // Update the search box to indicate
+                        // the detected position.
+
+                        searchInput.value = "";
+
+
+                        currentLocationStatus.textContent =
+                            "Your location was detected. GPS accuracy is approximately " +
+                            Math.round(accuracy) +
+                            " metres. Now click the exact waste collection point on the map if needed.";
+
+
+                        currentLocationButton.disabled = false;
+
+                    },
+
+
+                    function (error) {
+
+                        let message;
+
+                        switch (error.code) {
+
+                            case error.PERMISSION_DENIED:
+
+                                message =
+                                    "Location permission was denied. Allow location access in your browser settings, or select a point on the map.";
+
+                                break;
+
+                            case error.POSITION_UNAVAILABLE:
+
+                                message =
+                                    "Your location is unavailable. Check your device's location settings and try again.";
+
+                                break;
+
+                            case error.TIMEOUT:
+
+                                message =
+                                    "Location detection timed out. Please try again.";
+
+                                break;
+
+                            default:
+
+                                message =
+                                    "Unable to detect your location. Please select it manually.";
+
+                        }
+
+
+                        currentLocationStatus.textContent =
+                            message;
+
+                        currentLocationButton.disabled = false;
+
+                        gpsAccuracyDisplay.textContent =
+                            "Not available";
+
+                    },
+
+
+                    {
+                        enableHighAccuracy: true,
+                        timeout: 20000,
+                        maximumAge: 0
+                    }
+
+                );
+
+            }
+        );
+
+
+        // =====================================
+        // 5. SEARCH LOCATION WITH NOMINATIM
+        // =====================================
+
+        async function searchNominatim(query) {
+
+            const parameters = new URLSearchParams({
+
+                q: query,
+
+                format: "jsonv2",
+
+                limit: "8",
+
+                countrycodes: "in",
+
+                addressdetails: "1"
+
+            });
+
+
+            const response = await fetch(
+
+                "https://nominatim.openstreetmap.org/search?" +
+                parameters.toString(),
+
+                {
+                    headers: {
+                        "Accept": "application/json"
+                    }
+                }
+
+            );
+
+
+            if (!response.ok) {
+                throw new Error("Nominatim search failed.");
+            }
+
+
+            const data = await response.json();
+
+
+            return data.map(function (place) {
+
+                return {
+
+                    name:
+                        place.name ||
+                        place.display_name.split(",")[0],
+
+                    address:
+                        place.display_name,
+
+                    latitude:
+                        Number(place.lat),
+
+                    longitude:
+                        Number(place.lon)
+
+                };
+
+            });
+
+        }
+
+
+        // =====================================
+        // 6. FALLBACK SEARCH WITH PHOTON
+        // =====================================
+
+        async function searchPhoton(query) {
+
+            const parameters = new URLSearchParams({
+
+                q: query,
+
+                limit: "8",
+
+                lat: "26.4499",
+
+                lon: "80.3319",
+
+                zoom: "12",
+
+                lang: "en"
+
+            });
+
+
+            const response = await fetch(
+
+                "https://photon.komoot.io/api/?" +
+                parameters.toString()
+
+            );
+
+
+            if (!response.ok) {
+                throw new Error("Photon search failed.");
+            }
+
+
+            const data = await response.json();
+
+
+            return data.features.map(function (feature) {
+
+                const properties =
+                    feature.properties || {};
+
+                const coordinates =
+                    feature.geometry.coordinates;
+
+
+                const addressParts = [
+
+                    properties.name,
+
+                    properties.street,
+
+                    properties.district,
+
+                    properties.city,
+
+                    properties.state,
+
+                    properties.country
+
+                ].filter(function (value, index, array) {
+
+                    return value &&
+                        array.indexOf(value) === index;
+
+                });
+
+
+                const address =
+                    addressParts.join(", ");
+
+
+                return {
+
+                    name:
+                        properties.name ||
+                        address ||
+                        "Unnamed location",
+
+                    address:
+                        address ||
+                        "Address unavailable",
+
+                    latitude:
+                        Number(coordinates[1]),
+
+                    longitude:
+                        Number(coordinates[0])
+
+                };
+
+            });
+
+        }
+
+
+        // =====================================
+        // 7. DISPLAY SEARCH RESULTS
+        // =====================================
+
+        function displaySearchResults(places) {
+
+            searchResults.replaceChildren();
+
+            searchResults.style.display = "none";
+
+
+            const validPlaces = places.filter(function (place) {
+
+                return (
+
+                    Number.isFinite(place.latitude) &&
+
+                    Number.isFinite(place.longitude) &&
+
+                    place.latitude >= -90 &&
+
+                    place.latitude <= 90 &&
+
+                    place.longitude >= -180 &&
+
+                    place.longitude <= 180
+
+                );
+
+            });
+
+
+            if (validPlaces.length === 0) {
+
+                searchStatus.textContent =
+                    "No matching places were found. Try another spelling, a nearby landmark, or a street name.";
+
+                return;
+
+            }
+
+
+            searchStatus.textContent =
+                "Select the closest matching result. You can then click the exact point on the map.";
+
+            searchResults.style.display = "block";
+
+
+            validPlaces.forEach(function (place) {
+
+                const button =
+                    document.createElement("button");
+
+                button.type = "button";
+
+                button.className = "location-result";
+
+
+                const title =
+                    document.createElement("strong");
+
+                title.textContent = place.name;
+
+
+                const description =
+                    document.createElement("span");
+
+                description.textContent = place.address;
+
+
+                button.appendChild(title);
+
+                button.appendChild(description);
+
+
+                button.addEventListener(
+                    "click",
+                    function () {
+
+                        // Select the search result's coordinates.
+
+                        selectLocation(
+                            place.latitude,
+                            place.longitude,
+                            place.address
+                        );
+
+
+                        // Update the address field.
+
+                        locationInput.value =
+                            place.address;
+
+
+                        searchInput.value =
+                            place.address;
+
+
+                        gpsAccuracyDisplay.textContent =
+                            "Not available for searched locations";
+
+
+                        currentLocationStatus.textContent = "";
+
+
+                        searchStatus.textContent =
+                            "Location selected. Click the exact waste collection point on the map if necessary.";
+
+
+                        searchResults.style.display = "none";
+
+                    }
+                );
+
+
+                searchResults.appendChild(button);
+
+            });
+
+        }
+
+
+        // =====================================
+        // 8. MAIN SEARCH FUNCTION
+        // =====================================
+
+        async function searchLocation() {
+
+            const query = searchInput.value.trim();
+
+
+            if (!query) {
+
+                searchStatus.textContent =
+                    "Enter a street, crossing, landmark, or area name.";
+
+                return;
+
+            }
+
+
+            // Track the latest search request.
+
+            const requestNumber = ++searchRequestNumber;
+
+
+            searchButton.disabled = true;
+
+            searchStatus.textContent =
+                "Searching for your location...";
+
+            searchResults.replaceChildren();
+
+            searchResults.style.display = "none";
+
+
+            try {
+
+                // If the user did not specify a city,
+                // try Kanpur first for this project.
+
+                const queries = /kanpur/i.test(query)
+
+                    ? [query]
+
+                    : [
+                        query + ", Kanpur, Uttar Pradesh, India",
+                        query + ", India"
+                    ];
+
+
+                let places = [];
+
+                let serviceError = false;
+
+
+                // Try Nominatim.
+
+                for (const searchQuery of queries) {
+
+                    try {
+
+                        places =
+                            await searchNominatim(searchQuery);
+
+                    } catch (error) {
+
+                        console.warn(
+                            "Nominatim search failed:",
+                            error
+                        );
+
+                        serviceError = true;
+
+                    }
+
+
+                    if (requestNumber !== searchRequestNumber) {
+                        return;
+                    }
+
+
+                    if (places.length > 0) {
+                        break;
+                    }
+
+                }
+
+
+                // Try Photon if Nominatim finds no results.
+
+                if (places.length === 0) {
+
+                    searchStatus.textContent =
+                        "Trying an alternative location search...";
+
+
+                    for (const searchQuery of queries) {
+
+                        try {
+
+                            places =
+                                await searchPhoton(searchQuery);
+
+                        } catch (error) {
+
+                            console.warn(
+                                "Photon search failed:",
+                                error
+                            );
+
+                            serviceError = true;
+
+                        }
+
+
+                        if (requestNumber !== searchRequestNumber) {
+                            return;
+                        }
+
+
+                        if (places.length > 0) {
+                            break;
+                        }
+
+                    }
+
+                }
+
+
+                if (requestNumber !== searchRequestNumber) {
+                    return;
+                }
+
+
+                if (places.length === 0) {
+
+                    searchStatus.textContent = serviceError
+
+                        ? "The location services could not complete the search. Check your internet connection and try again."
+
+                        : "No matching place was found. Try a nearby landmark or search for the location on the map.";
+
+                    return;
+
+                }
+
+
+                displaySearchResults(places);
+
+
+            } catch (error) {
+
+                console.error(
+                    "Location search error:",
+                    error
+                );
+
+                searchStatus.textContent =
+                    "Unable to search right now. Check your internet connection or select your location directly on the map.";
+
+            } finally {
+
+                if (requestNumber === searchRequestNumber) {
+
+                    searchButton.disabled = false;
+
+                }
+
+            }
+
+        }
+
+
+        // =====================================
+        // 9. SEARCH BUTTON AND ENTER KEY
+        // =====================================
+
+        searchButton.addEventListener(
+            "click",
+            searchLocation
+        );
+
+
+        searchInput.addEventListener(
+            "keydown",
             function (event) {
 
-                if (
-                    latitudeInput.value === "" ||
-                    longitudeInput.value === ""
-                ) {
+                if (event.key === "Enter") {
+
                     event.preventDefault();
 
-                    mapError.textContent =
-                        "Please select the waste location on the map.";
+                    searchLocation();
 
-                    document.getElementById("location-map")
-                        .scrollIntoView({
-                            behavior: "smooth",
-                            block: "center"
-                        });
                 }
 
             }
         );
 
-        // Leaflet sometimes needs a size refresh after page layout.
+
+        // =====================================
+        // 10. CLICK MAP TO SELECT EXACT POINT
+        // =====================================
+
+        map.on(
+            "click",
+            function (event) {
+
+                const latitude =
+                    event.latlng.lat;
+
+                const longitude =
+                    event.latlng.lng;
+
+
+                // A manual map click overrides the previous point.
+
+                selectLocation(
+                    latitude,
+                    longitude,
+                    "Manually selected waste collection point"
+                );
+
+
+                gpsAccuracyDisplay.textContent =
+                    "Manual map selection";
+
+
+                currentLocationStatus.textContent =
+                    "Map point selected. Check the marker and coordinates.";
+
+
+                searchStatus.textContent = "";
+
+                searchResults.style.display = "none";
+
+            }
+        );
+
+
+        // =====================================
+        // 11. VALIDATE FORM BEFORE SUBMISSION
+        // =====================================
+
+        document.getElementById("report-form")
+            .addEventListener(
+                "submit",
+                function (event) {
+
+                    if (
+                        latitudeInput.value === "" ||
+                        longitudeInput.value === ""
+                    ) {
+
+                        event.preventDefault();
+
+
+                        mapError.textContent =
+                            "Please detect your current location, search for a place, or click directly on the map before submitting.";
+
+
+                        document.getElementById("location-map")
+                            .scrollIntoView({
+
+                                behavior: "smooth",
+
+                                block: "center"
+
+                            });
+
+                        return;
+
+                    }
+
+
+                    const latitude =
+                        Number(latitudeInput.value);
+
+                    const longitude =
+                        Number(longitudeInput.value);
+
+
+                    if (
+
+                        !Number.isFinite(latitude) ||
+
+                        !Number.isFinite(longitude) ||
+
+                        latitude < -90 ||
+
+                        latitude > 90 ||
+
+                        longitude < -180 ||
+
+                        longitude > 180
+
+                    ) {
+
+                        event.preventDefault();
+
+                        mapError.textContent =
+                            "The selected coordinates are invalid. Please select the location again.";
+
+                    }
+
+                }
+            );
+
+
+        // =====================================
+        // 12. INITIAL MAP LAYOUT
+        // =====================================
+
         setTimeout(function () {
+
             map.invalidateSize();
-        }, 200);
+
+        }, 300);
+
     </script>
 
 </body>
+
 </html>
